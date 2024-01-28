@@ -1,9 +1,9 @@
 import Table from "react-bootstrap/Table";
-import { getAxieMarketPlace } from "../api/axieMarketPlace";
+import { getAxieMarketPlace } from "../../api/axieMarketPlace";
 import { useEffect, useState } from "react";
-import getListedLands from "../api/query/getListedLands";
+import getAuctionsLands from "../../api/query/getAuctionsLands";
 
-function LandsListed() {
+function SalesLands() {
   const time = new Date();
   const timeFormat = {
     year: "numeric",
@@ -22,20 +22,25 @@ function LandsListed() {
 
   const priceBaseUnit = 1000000000000000000;
 
-  const fetchData = async () => {
+  const fetchData = async (size: string, landType: string) => {
     try {
-      const data = await getAxieMarketPlace(getListedLands(300));
-      setLandLists(data.data.data.settledAuctions.lands.results);
+      const response = await getAxieMarketPlace(
+        getAuctionsLands(size, landType)
+      );
+      const data = response.data.data.lands.results;
+      setLandLists(data);
+      console.log(data);
+      return data;
     } catch (error) {
       console.error(`Error fetching market data`, error);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData("100", "Savannah");
 
     const intervalId = setInterval(() => {
-      fetchData();
+      fetchData("100", "Savannah");
       const time = new Date();
       setLastUpdated(time.toLocaleString("en-US", timeFormat));
     }, 60000);
@@ -43,25 +48,19 @@ function LandsListed() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const filterLandLists = (type: string) => {
-    return landLists.filter((land) => land.landType === type);
-  };
-
-  const landTypes = ["Savannah", "Forest", "Arctic", "Mystic", "Genesis"];
+  const landTypes = ["Savannah"];
 
   return (
-    <>
-      <div className="py-24px">
-        <h1 className=" text-36px">100 Most Recent Land Transactions</h1>
+    <div className="h-full">
+      <div className="py-24px bg-dark">
+        <h1 className=" text-36px">Live Land Auctions</h1>
         <span>Last updated: {lastUpdated}</span>
         <hr />
       </div>
-      <div className="text-14px flex justify-center items-start gap-40px <md:flex-col">
+      <div className="bg-dark text-14px flex justify-center items-start gap-40px <md:flex-col">
         {landTypes.map((type, index) => {
-          const filteredLand = filterLandLists(type);
-
           return (
-            <div>
+            <div key={index}>
               <h2 className="text-24px">{type}</h2>
               <div
                 key={index}
@@ -71,25 +70,24 @@ function LandsListed() {
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Timestamp</th>
-                      <th>Sold Price (ETH)</th>
+                      <th>Listed Price</th>
+                      <th>Highest Offer</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredLand.map((land, index) => (
+                    {landLists.map((land, index) => (
                       <tr key={index} className="whitespace-nowrap">
                         <td>{index + 1}</td>
-                        {land.transferHistory.results.length > 0 ? (
+                        {land.order ? (
                           <>
                             <td>
-                              {new Date(
-                                land.transferHistory.results[0].timestamp * 1000
-                              ).toLocaleString()}
+                              {(
+                                land.order?.currentPrice / priceBaseUnit
+                              ).toFixed(3)}
                             </td>
                             <td className="c-blue!">
                               {(
-                                land.transferHistory.results[0].withPrice /
-                                priceBaseUnit
+                                land.highestOffer?.currentPrice / priceBaseUnit
                               ).toFixed(3)}
                             </td>
                           </>
@@ -109,8 +107,8 @@ function LandsListed() {
           );
         })}
       </div>
-    </>
+    </div>
   );
 }
 
-export default LandsListed;
+export default SalesLands;

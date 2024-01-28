@@ -1,4 +1,4 @@
-const getListedLands = (size) => `
+const getSalesLands = (size) => `
 query RecentlySoldLands {
     settledAuctions {
     lands(from: 0, size: ${size}) {
@@ -22,4 +22,4 @@ query RecentlySoldLands {
 }
 `;
 
-export default getListedLands
+export default getSalesLands;
