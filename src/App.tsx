@@ -1,18 +1,13 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import LandsListed from './components/LandsListed';
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import LandsListed from "./components/LandsListed";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <LandsListed/>
-    </>
-  )
+    <div className="bg-dark p-16px h-100%">
+      <LandsListed />
+    </div>
+  );
 }
 
-export default App
+export default App;

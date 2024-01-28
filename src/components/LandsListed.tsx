@@ -19,6 +19,7 @@ function LandsListed() {
   const [lastUpdated, setLastUpdated] = useState(
     time.toLocaleDateString("en-US", timeFormat)
   );
+
   const priceBaseUnit = 1000000000000000000;
 
   const fetchData = async () => {
@@ -60,45 +61,50 @@ function LandsListed() {
           const filteredLand = filterLandLists(type);
 
           return (
-            <div key={index}>
+            <div>
               <h2 className="text-24px">{type}</h2>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Timestamp</th>
-                    <th>Sold Price (ETH)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredLand.map((land, index) => (
-                    <tr key={index} className="whitespace-nowrap">
-                      <td>{index + 1}</td>
-                      {land.transferHistory.results.length > 0 ? (
-                        <>
-                          <td>
-                            {new Date(
-                              land.transferHistory.results[0].timestamp * 1000
-                            ).toLocaleString()}
-                          </td>
-                          <td>
-                            {(
-                              land.transferHistory.results[0].withPrice /
-                              priceBaseUnit
-                            ).toFixed(3)}
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td>Not Available</td>
-                          <td>Not Available</td>
-                          <td>Not Available</td>
-                        </>
-                      )}
+              <div
+                key={index}
+                className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"
+              >
+                <Table striped bordered hover variant="dark">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Timestamp</th>
+                      <th>Sold Price (ETH)</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {filteredLand.map((land, index) => (
+                      <tr key={index} className="whitespace-nowrap">
+                        <td>{index + 1}</td>
+                        {land.transferHistory.results.length > 0 ? (
+                          <>
+                            <td>
+                              {new Date(
+                                land.transferHistory.results[0].timestamp * 1000
+                              ).toLocaleString()}
+                            </td>
+                            <td className="c-blue!">
+                              {(
+                                land.transferHistory.results[0].withPrice /
+                                priceBaseUnit
+                              ).toFixed(3)}
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td>Not Available</td>
+                            <td>Not Available</td>
+                            <td>Not Available</td>
+                          </>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
             </div>
           );
         })}
