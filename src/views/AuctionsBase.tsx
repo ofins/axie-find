@@ -3,7 +3,7 @@ import AuctionsLands from "../components/sales/AuctionsLands";
 
 const AuctionsBase = () => {
   return (
-    <div className="h-full bg-dark c-white text-center">
+    <div className="h-full bg-bg-asPrimary c-white text-center">
       <AuctionsLands />
     </div>
   );

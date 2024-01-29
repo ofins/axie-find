@@ -51,12 +51,12 @@ function SalesLands() {
 
   return (
     <div className="h-full">
-      <div className="py-24px bg-dark">
+      <div className="py-24px bg-bg-asPrimary">
         <h1 className=" text-36px">100 Most Recent Land Transactions</h1>
         <span>Last updated: {lastUpdated}</span>
         <hr />
       </div>
-      <div className="bg-dark text-14px flex justify-center items-start gap-40px <md:flex-col">
+      <div className="bg-bg-asPrimary text-14px flex justify-center items-start gap-40px <md:flex-col">
         {landTypes.map((type, index) => {
           const filteredLand = filterLandLists(type);
 
@@ -86,7 +86,7 @@ function SalesLands() {
                                 land.transferHistory.results[0].timestamp * 1000
                               ).toLocaleString()}
                             </td>
-                            <td className="c-blue!">
+                            <td className="c-text-asInverse-02!">
                               {(
                                 land.transferHistory.results[0].withPrice /
                                 priceBaseUnit

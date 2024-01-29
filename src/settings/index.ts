@@ -1,0 +1,1 @@
+export const AXIE_MARKETPLACE = 'https://app.axieinfinity.com/marketplace'
