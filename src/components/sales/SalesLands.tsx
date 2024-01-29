@@ -2,6 +2,7 @@ import Table from "react-bootstrap/Table";
 import { getAxieMarketPlace } from "../../api/axieMarketPlace";
 import { useEffect, useState } from "react";
 import getSalesLands from "../../api/query/getSalesLands";
+import { redirectMarketLand } from "../../util/redirect";
 
 function SalesLands() {
   const time = new Date();
@@ -86,7 +87,12 @@ function SalesLands() {
                                 land.transferHistory.results[0].timestamp * 1000
                               ).toLocaleString()}
                             </td>
-                            <td className="c-text-asInverse-02!">
+                            <td
+                              className="c-text-asInverse-02! hover:underline cursor-pointer"
+                              onClick={() =>
+                                redirectMarketLand(land.col, land.row)
+                              }
+                            >
                               {(
                                 land.transferHistory.results[0].withPrice /
                                 priceBaseUnit
