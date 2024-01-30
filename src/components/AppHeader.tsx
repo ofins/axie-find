@@ -6,17 +6,19 @@ import Navbar from "react-bootstrap/Navbar";
 function AppHeader() {
   return (
     <div>
-      <Navbar bg="dark" data-bs-theme="dark" >
-        <Navbar.Brand href="#home">AxieFind</Navbar.Brand>
-        <Nav className="flex gap-8px ">
-          <NavLink to="market-sales" className="decoration-none c-white">
-            Sales
-          </NavLink>
-          <NavLink to="market-auctions" className="decoration-none c-white">
-            Auctions
-          </NavLink>
-          {/* <Nav.Link href="#pricing">Pricing</Nav.Link> */}
-        </Nav>
+      <Navbar bg="dark" data-bs-theme="dark">
+        <div className="flex items-center px-2rem">
+          <Navbar.Brand href="#home">AxieFind</Navbar.Brand>
+          <Nav className="flex gap-8px ">
+            <NavLink to="market-sales" className="decoration-none c-white">
+              Sales
+            </NavLink>
+            <NavLink to="market-auctions" className="decoration-none c-white">
+              Auctions
+            </NavLink>
+            {/* <Nav.Link href="#pricing">Pricing</Nav.Link> */}
+          </Nav>
+        </div>
       </Navbar>
     </div>
   );

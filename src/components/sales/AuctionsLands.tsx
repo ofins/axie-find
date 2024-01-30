@@ -3,6 +3,10 @@ import { getAxieMarketPlace } from "../../api/axieMarketPlace";
 import { useEffect, useState } from "react";
 import getAuctionsLands from "../../api/query/getAuctionsLands";
 import { redirectMarketLand } from "../../util/redirect";
+import { formatDateTime } from "../../util/formatDateTime";
+import { formatMoney } from "../../util/formatMoney";
+import { MoneyConfig } from "../../util/formatMoney";
+import { customSortArray } from "../../util/sortOrder";
 
 function SalesLands() {
   const time = new Date();
@@ -23,11 +27,7 @@ function SalesLands() {
     Mystic: [],
     Genesis: [],
   });
-  const [lastUpdated, setLastUpdated] = useState(
-    time.toLocaleDateString("en-US", timeFormat)
-  );
-
-  const priceBaseUnit = 1000000000000000000;
+  const [lastUpdated, setLastUpdated] = useState(formatDateTime(time));
 
   const fetchData = async (size: string, landType: string) => {
     try {
@@ -39,7 +39,6 @@ function SalesLands() {
         ...prevLandLists,
         [landType]: data,
       }));
-      console.log(data);
       return data;
     } catch (error) {
       console.error(`Error fetching market data`, error);
@@ -54,6 +53,15 @@ function SalesLands() {
     });
   };
 
+  // const updateSortLandLists = (landType) => {
+  //   console.log('1')
+  //   const data = customSortArray(landLists[landType]?.highestOffer.currentPrice);
+  //   setLandLists((prevLandList) => ({
+  //     ...prevLandList,
+  //     [landType]: data,
+  //   }));
+  // };
+
   useEffect(() => {
     fetchAllLandTypes();
 
@@ -61,7 +69,7 @@ function SalesLands() {
       fetchAllLandTypes();
 
       const time = new Date();
-      setLastUpdated(time.toLocaleString("en-US", timeFormat));
+      setLastUpdated(formatDateTime(time));
     }, 60000);
 
     return () => clearInterval(intervalId);
@@ -74,7 +82,7 @@ function SalesLands() {
         <span>Last updated: {lastUpdated}</span>
         <hr />
       </div>
-      <div className="bg-bg-asPrimary text-14px grid grid-cols-3 px-36px items-start flex-wrap gap-40px <md:flex-col">
+      <div className="bg-bg-asPrimary text-14px grid grid-cols-3 px-36px pb-48px items-start flex-wrap gap-40px <md:flex-col">
         {landTypes.map((type, index) => {
           return (
             <div key={index}>
@@ -88,6 +96,7 @@ function SalesLands() {
                     <tr>
                       <th>#</th>
                       <th>Listed Price</th>
+                      <th>Listed DateTime</th>
                       <th>Highest Offer</th>
                       <th>Owner Buy Price</th>
                       <th>Bought Date</th>
@@ -103,28 +112,30 @@ function SalesLands() {
                               onClick={() =>
                                 redirectMarketLand(land.col, land.row)
                               }
-                              className="cursor-pointer hover:underline"
+                              className="cursor-pointer hover:underline c-text-asInverse-02!"
                             >
-                              {(
-                                land.order?.currentPrice / priceBaseUnit
-                              ).toFixed(3)}
+                              {formatMoney(
+                                land.order?.currentPrice,
+                                MoneyConfig.AxieUnit
+                              )}
                             </td>
-                            <td className="c-text-asInverse-02!">
-                              {(
-                                land.highestOffer?.currentPrice / priceBaseUnit
-                              ).toFixed(3)}
+                            <td>{formatDateTime(land.order?.startedAt)}</td>
+                            <td>
+                              {formatMoney(
+                                land.highestOffer?.currentPrice,
+                                MoneyConfig.AxieUnit
+                              )}
                             </td>
                             <td>
-                              {(
-                                land.transferHistory.results[0]?.withPrice /
-                                priceBaseUnit
-                              ).toFixed(3)}
+                              {formatMoney(
+                                land.transferHistory.results[0]?.withPrice,
+                                MoneyConfig.AxieUnit
+                              )}
                             </td>
                             <td>
-                              {new Date(
-                                land.transferHistory.results[0]?.timestamp *
-                                  1000
-                              ).toLocaleString()}
+                              {formatDateTime(
+                                land.transferHistory.results[0]?.timestamp
+                              )}
                             </td>
                           </>
                         ) : (
@@ -148,5 +159,3 @@ function SalesLands() {
 }
 
 export default SalesLands;
-
-// https://app.axieinfinity.com/marketplace/lands/-105/-144/
