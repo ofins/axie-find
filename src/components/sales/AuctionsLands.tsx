@@ -85,13 +85,19 @@ function SalesLands() {
                 key={index}
                 className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"
               >
-                <Table striped bordered hover variant="dark" className="">
+                <Table
+                  striped
+                  bordered
+                  hover
+                  variant="dark"
+                  className="border-collapse"
+                >
                   {loading ? (
                     <Loading />
                   ) : (
                     <>
                       <thead>
-                        <tr>
+                        <tr className="sticky top--1%">
                           <th>#</th>
                           <th>Listed Price</th>
                           <th>Listed DateTime</th>

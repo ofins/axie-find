@@ -81,7 +81,7 @@ function SalesLands() {
                   ) : (
                     <>
                       <thead>
-                        <tr>
+                        <tr className="sticky top--1%">
                           <th>#</th>
                           <th>Timestamp</th>
                           <th>Sold Price (ETH)</th>
