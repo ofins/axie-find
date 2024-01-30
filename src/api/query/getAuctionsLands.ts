@@ -27,6 +27,11 @@ query GetAuctionsLands {
           timestamp
         }
       }
+      ownerProfile {
+        name
+        accountId
+        activated
+      }
     }
   }
 }

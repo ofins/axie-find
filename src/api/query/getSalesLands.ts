@@ -15,6 +15,11 @@ query RecentlySoldLands {
             withPrice
             }
         }
+        ownerProfile {
+            name
+            accountId
+            activated
+          }
         }
         total
     }
