@@ -64,7 +64,7 @@ function SalesLands() {
       fetchAllLandTypes();
 
       setLastUpdated(displayCurrentTime());
-    }, 60000);
+    }, 60000 * 5);
 
     return () => clearInterval(intervalId);
   }, []);

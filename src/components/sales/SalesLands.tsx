@@ -32,7 +32,7 @@ function SalesLands() {
     const intervalId = setInterval(() => {
       fetchData();
       setLastUpdated(displayCurrentTime());
-    }, 60000);
+    }, 60000 * 5);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -56,17 +56,17 @@ function SalesLands() {
 
   return (
     <div className="h-full">
-      <div className="p-2rem bg-bg-asPrimary">
+      <div className="bg-bg-asPrimary">
         <h1 className=" text-36px">100 Latest Land Sales</h1>
         <span>Last updated: {lastUpdated}</span>
         <hr />
       </div>
-      <div className="bg-bg-asPrimary text-14px flex flex-wrap justify-center items-start justify-start gap-40px <md:flex-col">
+      <div className="bg-bg-asPrimary text-14px grid grid-cols-3 gap-40px <md:flex flex-wrap justify-center">
         {landTypes.map((type, index) => {
           const filteredLand = filterLandLists(type);
 
           return (
-            <div key={index}>
+            <div key={index} className="min-w-484px">
               <h2 className="text-24px">{type}</h2>
               <div className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh">
                 <Table
@@ -113,13 +113,19 @@ function SalesLands() {
                                 <td
                                   className={
                                     AXIE_WHALES_MP.some(
-                                      (whale) => whale.owner === land.owner
+                                      (whale) =>
+                                        whale.owner ===
+                                        land.transferHistory.results[0]
+                                          .fromProfile.addresses.ronin
                                     )
                                       ? "c-primary!"
                                       : ""
                                   }
                                 >
-                                  {land.ownerProfile?.name}
+                                  {
+                                    land.transferHistory.results[0].fromProfile
+                                      .name
+                                  }
                                 </td>
                               </>
                             ) : (

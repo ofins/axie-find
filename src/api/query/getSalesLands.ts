@@ -1,5 +1,5 @@
 const getSalesLands = (size) => `
-query RecentlySoldLands {
+query GetSalesLands {
     settledAuctions {
     lands(from: 0, size: ${size}) {
         results {
@@ -10,15 +10,19 @@ query RecentlySoldLands {
         owner
         transferHistory(size: 1) {
             results {
-            withPriceUsd
-            timestamp
-            withPrice
+                withPriceUsd
+                timestamp
+                withPrice
+                fromProfile{
+                    name
+                    addresses {
+                        ronin
+                    }
+                }
             }
         }
         ownerProfile {
             name
-            accountId
-            activated
           }
         }
         total
