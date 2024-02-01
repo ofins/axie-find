@@ -8,6 +8,9 @@ query GetSalesLands {
         row
         tokenId
         owner
+        ownerProfile {
+            name
+          }
         transferHistory(size: 1) {
             results {
                 withPriceUsd
@@ -20,9 +23,6 @@ query GetSalesLands {
                     }
                 }
             }
-        }
-        ownerProfile {
-            name
           }
         }
         total

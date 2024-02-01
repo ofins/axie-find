@@ -86,6 +86,7 @@ function SalesLands() {
                           <th>Timestamp</th>
                           <th>Sold Price (ETH)</th>
                           <th>Seller</th>
+                          <th>Buyer</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -127,6 +128,7 @@ function SalesLands() {
                                       .name
                                   }
                                 </td>
+                                <td>{land.ownerProfile?.name}</td>
                               </>
                             ) : (
                               <>
