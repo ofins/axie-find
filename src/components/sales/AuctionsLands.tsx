@@ -1,4 +1,4 @@
-import Table from "react-bootstrap/Table";
+// import Table from "react-bootstrap/Table";
 import { getAxieMarketPlace } from "../../api/axieMarketPlace";
 import { useEffect, useState } from "react";
 import getAuctionsLands from "../../api/query/getAuctionsLands";
@@ -9,6 +9,15 @@ import { MoneyConfig } from "../../util/formatMoney";
 import { customSortArray } from "../../util/sortOrder";
 import Loading from "../Loading";
 import { AXIE_WHALES_MP, AXIE_PROFILE } from "../../settings";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import { StyledTableRow } from "@/styles/table";
 
 function SalesLands() {
   const [landLists, setLandLists] = useState({
@@ -76,7 +85,7 @@ function SalesLands() {
         <span>Last updated: {lastUpdated}</span>
         <hr />
       </div>
-      <div className="bg-bg-asPrimary text-14px grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <md:flex-col">
+      <div className="grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <md:flex-col">
         {landTypes.map((type, index) => {
           return (
             <div key={index}>
@@ -85,7 +94,92 @@ function SalesLands() {
                 key={index}
                 className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"
               >
-                <Table
+                <Paper
+                  variant="outlined"
+                  square={false}
+                  sx={{ width: "100%", overflow: "hidden" }}
+                >
+                  <TableContainer>
+                    <Table stickyHeader size="small" aria-label="sticky table">
+                      <TableHead>
+                        <StyledTableRow>
+                          <TableCell>#</TableCell>
+                          <TableCell align="left">Listed Price</TableCell>
+                          <TableCell align="left">Listed DateTime</TableCell>
+                          <TableCell align="left">Seller</TableCell>
+                          <TableCell align="left">Highest Offer</TableCell>
+                          <TableCell align="left">Owner Buy Price</TableCell>
+                          <TableCell align="left">Bought Date</TableCell>
+                        </StyledTableRow>
+                      </TableHead>
+                      <TableBody>
+                        {landLists[type].map((land, index) => (
+                          <StyledTableRow
+                            key={index}
+                            className="whitespace-nowrap"
+                          >
+                            <TableCell>{index + 1}</TableCell>
+                            {land.order ? (
+                              <>
+                                <TableCell
+                                  onClick={() =>
+                                    redirectMarketLand(land.col, land.row)
+                                  }
+                                  className="cursor-pointer hover:underline fw-700!"
+                                >
+                                  {formatMoney(
+                                    land.order?.currentPrice,
+                                    MoneyConfig.AxieUnit
+                                  )}
+                                </TableCell>
+                                <TableCell>
+                                  {formatDateTime(land.order?.startedAt)}
+                                </TableCell>
+                                {/* Seller */}
+                                <TableCell
+                                  className={`max-w-120px overflow-x-hidden
+                                    ${
+                                      AXIE_WHALES_MP.some(
+                                        (whale) => whale.owner === land.owner
+                                      )
+                                        ? "italic"
+                                        : ""
+                                    }`}
+                                >
+                                  {land.ownerProfile?.name}
+                                </TableCell>
+                                <TableCell>
+                                  {formatMoney(
+                                    land.highestOffer?.currentPrice,
+                                    MoneyConfig.AxieUnit
+                                  )}
+                                </TableCell>
+                                <TableCell>
+                                  {formatMoney(
+                                    land.transferHistory.results[0]?.withPrice,
+                                    MoneyConfig.AxieUnit
+                                  )}
+                                </TableCell>
+                                <TableCell>
+                                  {formatDateTime(
+                                    land.transferHistory.results[0]?.timestamp
+                                  )}
+                                </TableCell>
+                              </>
+                            ) : (
+                              <>
+                                <TableCell>Not Available</TableCell>
+                                <TableCell>Not Available</TableCell>
+                                <TableCell>Not Available</TableCell>
+                              </>
+                            )}
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Paper>
+                {/* <Table
                   striped
                   bordered
                   hover
@@ -166,7 +260,7 @@ function SalesLands() {
                       </tbody>
                     </>
                   )}
-                </Table>
+                </Table> */}
               </div>
             </div>
           );

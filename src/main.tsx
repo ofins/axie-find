@@ -14,16 +14,37 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#212529",
+    },
+    secondary: {
+      main: "#1c1c1c",
+    },
+  },
+});
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LayoutBase />}>
-          <Route index element={<Home />} />
-          <Route path="market-sales" element={<SalesBase />} />
-          <Route path="market-auctions" element={<AuctionsBase />} />
-        </Route>
-      </Routes>
+      <ThemeProvider theme={darkTheme}>
+        <Routes>
+          <Route path="/" element={<LayoutBase />}>
+            <Route index element={<Home />} />
+            <Route path="market-sales" element={<SalesBase />} />
+            <Route path="market-auctions" element={<AuctionsBase />} />
+          </Route>
+        </Routes>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
