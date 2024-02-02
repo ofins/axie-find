@@ -5,25 +5,33 @@ import { redirectMarketLand } from "@/util/redirect";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
-import Loading from "../Loading";
+import Loading from "../components/Loading";
 import { AXIE_WHALES_MP } from "@/settings";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import { StyledTableRow } from "@/styles/material/table";
-import AppTitle from "../AppTitle";
+import AppTitle from "../components/AppTitle";
 import { useMarket } from "@/hooks/useMarket";
+import { ScatterChart } from "@mui/x-charts/ScatterChart";
 
 function SalesLands() {
   const [landLists, setLandLists] = useState<[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string>(displayCurrentTime());
   const [loading, setLoading] = useState<boolean>(false);
   const title = "Recently Sold Lands";
+
+  const data = [
+    { x: 1, y: 0.148, id: 1 },
+    { x: 2, y: 0.159, id: 2 },
+    { x: 3, y: 0.3, id: 3 },
+    { x: 4, y: 0.2, id: 4 },
+    { x: 4, y: 0.185, id: 5 },
+    { x: 5, y: 0.25, id: 6 },
+  ];
 
   const { landTypes, landIcons } = useMarket();
 
@@ -68,6 +76,12 @@ function SalesLands() {
   return (
     <div className="h-full">
       <AppTitle title={title} lastUpdated={lastUpdated} />
+      {/* <ScatterChart
+        width={500}
+        height={300}
+        series={[{ data, label: "pv", id: "pvId" }]}
+        xAxis={[{ min: 0 }]}
+      /> */}
       <div className="text-14px grid grid-cols-3 gap-10px <lg:grid-cols-1">
         {landTypes.map((type, index) => {
           const filteredLand = filterLandLists(type);
