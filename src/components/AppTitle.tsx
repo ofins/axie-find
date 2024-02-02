@@ -5,10 +5,12 @@ const style = {
 const AppTitle = (props) => {
   return (
     <div>
-      <h1 className=" text-28px" style={style}>
+      <h1 className="text-28px mt-84px text-center" style={style}>
         {props.title}
       </h1>
-      <span>Last updated: {props.lastUpdated}</span>
+      <span className="text-sm">
+        Last updated: <i>{props.lastUpdated}</i>
+      </span>
       <hr />
     </div>
   );
