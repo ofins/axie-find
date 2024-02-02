@@ -1,13 +1,13 @@
 import Table from "react-bootstrap/Table";
-import { getAxieMarketPlace } from "../../api/axieMarketPlace";
+import { getAxieMarketPlace } from "@/api/axieMarketPlace";
 import { useEffect, useState } from "react";
-import getSalesLands from "../../api/query/getSalesLands";
-import { redirectMarketLand } from "../../util/redirect";
-import { formatDateTime, displayCurrentTime } from "../../util/formatDateTime";
-import { formatMoney } from "../../util/formatMoney";
-import { MoneyConfig } from "../../util/formatMoney";
+import getSalesLands from "@/api/query/getSalesLands";
+import { redirectMarketLand } from "@/util/redirect";
+import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
+import { formatMoney } from "@/util/formatMoney";
+import { MoneyConfig } from "@/util/formatMoney";
 import Loading from "../Loading";
-import { AXIE_WHALES_MP } from "../../settings";
+import { AXIE_WHALES_MP } from "@/settings";
 
 function SalesLands() {
   const [landLists, setLandLists] = useState<[]>([]);
@@ -32,7 +32,7 @@ function SalesLands() {
     const intervalId = setInterval(() => {
       fetchData();
       setLastUpdated(displayCurrentTime());
-    }, 60000 * 5);
+    }, 300000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -56,12 +56,12 @@ function SalesLands() {
 
   return (
     <div className="h-full">
-      <div className="bg-bg-asPrimary">
+      <div>
         <h1 className=" text-36px">100 Latest Land Sales</h1>
         <span>Last updated: {lastUpdated}</span>
         <hr />
       </div>
-      <div className="bg-bg-asPrimary text-14px grid grid-cols-3 gap-40px <md:flex flex-wrap justify-center">
+      <div className="text-14px grid grid-cols-3 gap-40px <md:flex flex-wrap justify-center">
         {landTypes.map((type, index) => {
           const filteredLand = filterLandLists(type);
 
@@ -69,13 +69,7 @@ function SalesLands() {
             <div key={index} className="min-w-484px">
               <h2 className="text-24px">{type}</h2>
               <div className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh">
-                <Table
-                  striped
-                  bordered
-                  hover
-                  variant="dark"
-                  className="min-w-323px"
-                >
+                <Table striped bordered hover className="min-w-323px">
                   {loading ? (
                     <Loading />
                   ) : (

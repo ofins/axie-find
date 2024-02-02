@@ -8,35 +8,19 @@ import SalesBase from "./views/SalesBase.tsx";
 import AuctionsBase from "./views/AuctionsBase.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./views/Home.tsx";
+import { lightTheme, darkTheme } from "./styles/material/theme";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#212529",
-    },
-    secondary: {
-      main: "#1c1c1c",
-    },
-  },
-});
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
+import { ThemeProvider } from "@mui/material/styles";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={lightTheme}>
         <Routes>
           <Route path="/" element={<LayoutBase />}>
             <Route index element={<Home />} />
