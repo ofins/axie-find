@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LayoutBase from "./components/LayoutBase.tsx";
 import SalesBase from "./views/SalesBase.tsx";
 import AuctionsBase from "./views/AuctionsBase.tsx";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./views/Home.tsx";
 import { lightTheme, darkTheme } from "./styles/material/theme";
 

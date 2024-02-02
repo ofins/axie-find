@@ -1,4 +1,3 @@
-// import Table from "react-bootstrap/Table";
 import { getAxieMarketPlace } from "@/api/axieMarketPlace";
 import { useEffect, useState } from "react";
 import getAuctionsLands from "@/api/query/getAuctionsLands";
@@ -19,6 +18,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "../AppTitle";
+import { useMarket } from "@/hooks/useMarket";
 
 function SalesLands() {
   const [landLists, setLandLists] = useState({
@@ -30,6 +30,8 @@ function SalesLands() {
   });
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const [loading, setLoading] = useState<boolean>(false);
+  const title = "Live Land Auctions";
+  const { landTypes, landIcons } = useMarket();
 
   const fetchData = async (size: string, landType: string) => {
     setLoading(true);
@@ -49,8 +51,6 @@ function SalesLands() {
       setLoading(false);
     }
   };
-
-  const landTypes = ["Savannah", "Forest", "Arctic", "Mystic", "Genesis"];
 
   const fetchAllLandTypes = () => {
     landTypes.forEach((land) => {
@@ -81,12 +81,14 @@ function SalesLands() {
 
   return (
     <div className="h-full">
-      <AppTitle lastUpdated={lastUpdated} />
+      <AppTitle title={title} lastUpdated={lastUpdated} />
       <div className="grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <lg:grid-cols-1 <lg:px-8px">
         {landTypes.map((type, index) => {
           return (
             <div key={index}>
-              <h2 className="text-24px text-start">{type}</h2>
+              <h2 className="text-24px text-start">
+                {type} {landIcons[index]}
+              </h2>
               <div
                 key={index}
                 className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"
@@ -106,6 +108,7 @@ function SalesLands() {
                         stickyHeader
                         aria-label="sticky table"
                         size="small"
+                        className="whitespace-nowrap"
                       >
                         <TableHead>
                           <StyledTableRow>
@@ -119,7 +122,7 @@ function SalesLands() {
                           </StyledTableRow>
                         </TableHead>
                         <TableBody>
-                          {landLists[type].map((land, index) => (
+                          {landLists[type]?.map((land, index) => (
                             <StyledTableRow
                               key={index}
                               className="whitespace-nowrap"

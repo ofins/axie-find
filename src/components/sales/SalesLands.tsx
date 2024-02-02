@@ -1,4 +1,3 @@
-import Table from "react-bootstrap/Table";
 import { getAxieMarketPlace } from "@/api/axieMarketPlace";
 import { useEffect, useState } from "react";
 import getSalesLands from "@/api/query/getSalesLands";
@@ -8,11 +7,25 @@ import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
 import Loading from "../Loading";
 import { AXIE_WHALES_MP } from "@/settings";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import { StyledTableRow } from "@/styles/material/table";
+import AppTitle from "../AppTitle";
+import { useMarket } from "@/hooks/useMarket";
 
 function SalesLands() {
   const [landLists, setLandLists] = useState<[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string>(displayCurrentTime());
   const [loading, setLoading] = useState<boolean>(false);
+  const title = "Recently Sold Lands";
+
+  const { landTypes, landIcons } = useMarket();
 
   const fetchData = async () => {
     setLoading(true);
@@ -52,50 +65,58 @@ function SalesLands() {
     );
   };
 
-  const landTypes = ["Savannah", "Forest", "Arctic", "Mystic", "Genesis"];
-
   return (
     <div className="h-full">
-      <div>
-        <h1 className=" text-36px">100 Latest Land Sales</h1>
-        <span>Last updated: {lastUpdated}</span>
-        <hr />
-      </div>
-      <div className="text-14px grid grid-cols-3 gap-40px <md:flex flex-wrap justify-center">
+      <AppTitle title={title} lastUpdated={lastUpdated} />
+      <div className="text-14px grid grid-cols-3 gap-10px <lg:grid-cols-1">
         {landTypes.map((type, index) => {
           const filteredLand = filterLandLists(type);
 
           return (
-            <div key={index} className="min-w-484px">
-              <h2 className="text-24px">{type}</h2>
-              <div className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh">
-                <Table striped bordered hover className="min-w-323px">
+            <div key={index}>
+              <h2 className="text-24px">
+                {type} {landIcons[index]}
+              </h2>
+              {/* <div className="text-center h-70vh  h-fit max-h-70vh"> */}
+              <Paper
+                variant="outlined"
+                square={true}
+                sx={{ width: "100%", height: 350, overflow: "hidden" }}
+              >
+                <TableContainer sx={{ maxHeight: 350 }}>
                   {loading ? (
-                    <Loading />
+                    <div className="h-350px flex justify-center items-center">
+                      <Loading />
+                    </div>
                   ) : (
-                    <>
-                      <thead>
-                        <tr className="sticky top--1%">
-                          <th>#</th>
-                          <th>Timestamp</th>
-                          <th>Sold Price (ETH)</th>
-                          <th>Seller</th>
-                          <th>Buyer</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                    <Table
+                      stickyHeader
+                      aria-label="sticky table"
+                      size="small"
+                      className="whitespace-nowrap"
+                    >
+                      <TableHead>
+                        <TableCell>#</TableCell>
+                        <TableCell>Timestamp</TableCell>
+                        <TableCell>Sold</TableCell>
+                        <TableCell>Details</TableCell>
+                      </TableHead>
+                      <TableBody>
                         {filteredLand.map((land, index) => (
-                          <tr key={index} className="whitespace-nowrap">
-                            <td>{index + 1}</td>
+                          <StyledTableRow
+                            key={index}
+                            className="whitespace-nowrap"
+                          >
+                            <TableCell>{index + 1}</TableCell>
                             {land.transferHistory.results.length > 0 ? (
                               <>
-                                <td>
+                                <TableCell>
                                   {formatDateTime(
                                     land.transferHistory.results[0].timestamp
                                   )}
-                                </td>
-                                <td
-                                  className="c-text-asInverse-02! hover:underline cursor-pointer"
+                                </TableCell>
+                                <TableCell
+                                  className="fw-700! hover:underline cursor-pointer"
                                   onClick={() =>
                                     redirectMarketLand(land.col, land.row)
                                   }
@@ -104,56 +125,49 @@ function SalesLands() {
                                     land.transferHistory.results[0].withPrice,
                                     MoneyConfig.AxieUnit
                                   )}
-                                </td>
-                                <td
-                                  className={
+                                </TableCell>
+                                <TableCell
+                                  className={`${
                                     AXIE_WHALES_MP.some(
                                       (whale) =>
                                         whale.owner ===
                                         land.transferHistory.results[0]
                                           .fromProfile.addresses.ronin
                                     )
-                                      ? "c-primary!"
+                                      ? ""
                                       : ""
-                                  }
+                                  }`}
                                 >
-                                  {
-                                    land.transferHistory.results[0].fromProfile
-                                      .name
-                                  }
-                                </td>
-                                <td>{land.ownerProfile?.name}</td>
+                                  <div className="flex justify-between">
+                                    <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
+                                      {
+                                        land.transferHistory.results[0]
+                                          .fromProfile.name
+                                      }
+                                    </span>
+                                    <span className="w-fit">➡️</span>
+                                    <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
+                                      {land.ownerProfile?.name}
+                                    </span>
+                                  </div>
+                                </TableCell>
+
+                                {/* <TableCell>{land.ownerProfile?.name}</TableCell> */}
                               </>
                             ) : (
                               <>
-                                <td>Not Available</td>
-                                <td>Not Available</td>
-                                <td>Not Available</td>
+                                <TableCell>Not Available</TableCell>
+                                <TableCell>Not Available</TableCell>
+                                <TableCell>Not Available</TableCell>
                               </>
                             )}
-                          </tr>
+                          </StyledTableRow>
                         ))}
-                      </tbody>
-                    </>
+                      </TableBody>
+                    </Table>
                   )}
-                </Table>
-                {/* <Table striped bordered hover variant="dark">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Date</th>
-                      <th>Transaction</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>{index + 1}</td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </Table> */}
-              </div>
+                </TableContainer>
+              </Paper>
             </div>
           );
         })}

@@ -5,7 +5,6 @@ export const lightTheme = createTheme({
     mode: "light",
   },
   typography: {
-    fontFamily: "Outfit",
     fontSize: 16,
   },
 });
@@ -15,7 +14,6 @@ export const darkTheme = createTheme({
     mode: "dark",
   },
   typography: {
-    fontFamily: "Outfit",
     fontSize: 16,
   },
 });

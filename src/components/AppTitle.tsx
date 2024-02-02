@@ -6,7 +6,7 @@ const AppTitle = (props) => {
   return (
     <div>
       <h1 className=" text-28px" style={style}>
-        Live Land Auctions
+        {props.title}
       </h1>
       <span>Last updated: {props.lastUpdated}</span>
       <hr />
