@@ -8,7 +8,7 @@ import LandsLayout from "@/views/layouts/LandsLayout.tsx";
 import LandsSales from "@/views/lands/LandsSales.tsx";
 import LandsAuctions from "@/views/lands/LandsAuctions.tsx";
 import GenkaiLayout from "@/views/layouts/GenkaiLayout.tsx";
-import GenkaiSales from "@/views/GenkaiSales.tsx";
+import GenkaiSales from "@/views/genkai/GenkaiSales.tsx";
 import Home from "./views/Home.tsx";
 import { lightTheme, darkTheme } from "./styles/material/theme";
 

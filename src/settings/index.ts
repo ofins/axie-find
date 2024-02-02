@@ -2,6 +2,8 @@ export const AXIE_MARKETPLACE = "https://app.axieinfinity.com/marketplace";
 
 export const AXIE_PROFILE = "https://app.axieinfinity.com/profile"
 
+export const RONIN_URL = "https://app.roninchain.com"
+
 export const AXIE_WHALES_MP = [
   {
     owner: "0x03e29ba3081b684de782e2f296cb8a5b622f8026",

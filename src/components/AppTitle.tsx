@@ -5,7 +5,7 @@ const style = {
 const AppTitle = (props) => {
   return (
     <div>
-      <h1 className="text-28px mt-84px text-center" style={style}>
+      <h1 className="text-28px text-center" style={style}>
         {props.title}
       </h1>
       <span className="text-sm">

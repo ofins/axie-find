@@ -1,8 +1,10 @@
 const AxieBaseUnit = 1000000000000000000;
+const MavisBaseUnit = 1000000000000000000;
 
 export enum MoneyConfig {
   Default = "default",
   AxieUnit = "AxieUnit",
+  MavisUnit = "MavisUnit",
 }
 
 export const formatMoney = (
@@ -21,5 +23,7 @@ export const formatMoney = (
     return num?.toFixed(3);
   } else if (config === MoneyConfig.AxieUnit) {
     return (num / AxieBaseUnit).toFixed(3);
+  } else if (config === MoneyConfig.MavisUnit) {
+    return (num / MavisBaseUnit).toFixed(0);
   }
 };
