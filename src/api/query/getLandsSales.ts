@@ -1,4 +1,4 @@
-const getSalesLands = (size) => `
+const getLandsSales = (size) => `
 query GetSalesLands {
     settledAuctions {
     lands(from: 0, size: ${size}) {
@@ -31,4 +31,4 @@ query GetSalesLands {
 }
 `;
 
-export default getSalesLands;
+export default getLandsSales;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SalesLands from "./views/SalesLands";
+import LandsSales from "./views/lands/LandsSales";
 
 function App() {
   return (

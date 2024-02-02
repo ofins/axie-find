@@ -20,7 +20,7 @@ import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "../components/AppTitle";
 import { useMarket } from "@/hooks/useMarket";
 
-function SalesLands() {
+function GenkaiSales() {
   const [landLists, setLandLists] = useState({
     Savannah: [],
     Forest: [],
@@ -199,4 +199,4 @@ function SalesLands() {
   );
 }
 
-export default SalesLands;
+export default GenkaiSales;

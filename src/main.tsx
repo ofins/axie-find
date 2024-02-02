@@ -4,8 +4,11 @@ import "./index.css";
 import "virtual:uno.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LayoutBase from "./components/LayoutBase.tsx";
-import SalesLands from "@/views/SalesLands";
-import AuctionsLands from "@/views/AuctionsLands.tsx";
+import LandsLayout from "@/views/layouts/LandsLayout.tsx";
+import LandsSales from "@/views/lands/LandsSales.tsx";
+import LandsAuctions from "@/views/lands/LandsAuctions.tsx";
+import GenkaiLayout from "@/views/layouts/GenkaiLayout.tsx";
+import GenkaiSales from "@/views/GenkaiSales.tsx";
 import Home from "./views/Home.tsx";
 import { lightTheme, darkTheme } from "./styles/material/theme";
 
@@ -23,8 +26,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<LayoutBase />}>
             <Route index element={<Home />} />
-            <Route path="/market-sales" element={<SalesLands />} />
-            <Route path="/market-auctions" element={<AuctionsLands />} />
+            <Route path="/lands" element={<LandsLayout />}>
+              <Route path="sales" element={<LandsSales />} />
+              <Route path="auctions" element={<LandsAuctions />} />
+            </Route>
+            <Route path="/genkai" element={<GenkaiLayout />}>
+              <Route path="auctions" element={<GenkaiSales />} />
+            </Route>
           </Route>
         </Routes>
       </ThemeProvider>

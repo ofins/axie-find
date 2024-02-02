@@ -1,12 +1,12 @@
 export const sideNavList = [
   {
-    text: "Lands Sold",
-    path: "market-sales",
+    text: "Lands",
+    path: "lands",
     icon: "",
   },
   {
-    text: "Land Auctions",
-    path: "market-auctions",
+    text: "Genkai",
+    path: "genkai",
     icon: "",
   },
 ];

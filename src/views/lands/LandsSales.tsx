@@ -1,11 +1,11 @@
 import { getAxieMarketPlace } from "@/api/axieMarketPlace";
 import { useEffect, useState } from "react";
-import getSalesLands from "@/api/query/getSalesLands";
+import getLandsSales from "@/api/query/getLandsSales";
 import { redirectMarketLand } from "@/util/redirect";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import { AXIE_WHALES_MP } from "@/settings";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -14,11 +14,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import { StyledTableRow } from "@/styles/material/table";
-import AppTitle from "../components/AppTitle";
+import AppTitle from "../../components/AppTitle";
 import { useMarket } from "@/hooks/useMarket";
 import { ScatterChart } from "@mui/x-charts/ScatterChart";
 
-function SalesLands() {
+function LandsSales() {
   const [landLists, setLandLists] = useState<[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string>(displayCurrentTime());
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,7 +38,7 @@ function SalesLands() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await getAxieMarketPlace(getSalesLands(300));
+      const data = await getAxieMarketPlace(getLandsSales(300));
       setLandLists(data.data.data.settledAuctions.lands.results);
     } catch (error) {
       console.error(`Error fetching market data`, error);
@@ -190,4 +190,4 @@ function SalesLands() {
   );
 }
 
-export default SalesLands;
+export default LandsSales;
