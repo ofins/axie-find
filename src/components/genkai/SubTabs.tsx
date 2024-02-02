@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Link, NavLink } from "react-router-dom";
 import GenkaiSales from "@/views/genkai/GenkaiSales";
+import GenkaiAuctions from "@/views/genkai/GenkaiAuctions";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -55,7 +56,7 @@ export default function SubTabs() {
           aria-label="basic tabs example"
         >
           <Tab label="Sales" {...a11yProps(0)} />
-          <Tab disabled label="Auctions" {...a11yProps(1)} />
+          <Tab label="Auctions" {...a11yProps(1)} />
           <Tab disabled label="Coming Soon" {...a11yProps(2)} />
         </Tabs>
       </Box>
@@ -63,7 +64,7 @@ export default function SubTabs() {
         <GenkaiSales />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        {/* <GenkaiSales /> */}
+        <GenkaiAuctions />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Coming Soon

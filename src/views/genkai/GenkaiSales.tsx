@@ -8,11 +8,11 @@ import Loading from "../../components/Loading";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import { StyledTableRow } from "@/styles/material/table";
-import AppTitle from "../../components/AppTitle";
+import AppTitle from "@/components/AppTitle.tsx";
 import { redirectRoninTx } from "@/util/redirect";
 
 function GenkaiSales() {
@@ -29,7 +29,6 @@ function GenkaiSales() {
       const data = response.data.data.recentlySolds.results;
 
       setGenkaiLists(data);
-      console.log(data);
       return data;
     } catch (error) {
       console.error(`Error fetching market data`, error);
@@ -97,9 +96,9 @@ function GenkaiSales() {
                         </>
                       ) : (
                         <>
-                          <TableCell>Not Available</TableCell>
-                          <TableCell>Not Available</TableCell>
-                          <TableCell>Not Available</TableCell>
+                          <TableCell>N/A</TableCell>
+                          <TableCell>N/A</TableCell>
+                          <TableCell>N/A</TableCell>
                         </>
                       )}
                     </StyledTableRow>
