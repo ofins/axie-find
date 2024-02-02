@@ -82,11 +82,11 @@ function SalesLands() {
   return (
     <div className="h-full">
       <AppTitle lastUpdated={lastUpdated} />
-      <div className="grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <md:flex-col">
+      <div className="grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <lg:grid-cols-1 <lg:px-8px">
         {landTypes.map((type, index) => {
           return (
             <div key={index}>
-              <h2 className="text-24px">{type}</h2>
+              <h2 className="text-24px text-start">{type}</h2>
               <div
                 key={index}
                 className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"

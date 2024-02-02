@@ -7,7 +7,7 @@ function AppHeader() {
   return (
     <div>
       <Navbar>
-        <div className="flex items-center px-2rem">
+        <div className=" flex items-center px-2rem">
           <Navbar.Brand href="#home">AxieFind</Navbar.Brand>
           <Nav className="flex gap-8px ">
             <NavLink to="market-sales" className="decoration-none">

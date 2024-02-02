@@ -24,8 +24,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<LayoutBase />}>
             <Route index element={<Home />} />
-            <Route path="market-sales" element={<SalesBase />} />
-            <Route path="market-auctions" element={<AuctionsBase />} />
+            <Route path="/market-sales" element={<SalesBase />} />
+            <Route path="/market-auctions" element={<AuctionsBase />} />
           </Route>
         </Routes>
       </ThemeProvider>
