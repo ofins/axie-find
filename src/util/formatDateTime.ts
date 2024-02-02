@@ -1,5 +1,3 @@
-const time = new Date();
-
 const timeFormat = {
   year: "numeric",
   month: "short",
@@ -19,5 +17,6 @@ export const formatToLocaleDate = (date: Date) => {
 };
 
 export const displayCurrentTime = (): string => {
+  const time = new Date();
   return formatToLocaleDate(time);
 };
