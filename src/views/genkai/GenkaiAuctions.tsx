@@ -20,13 +20,12 @@ const GenkaiAuctions = () => {
 
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const [loading, setLoading] = useState<boolean>(false);
-  const title = "Recent Genkai Sales";
+  const title = "Genkai Auctions Listed";
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const response = await getMavisMarketPlace(getGenkaiAuctions);
-      //   const data = response.data.data.recentlySolds.results;
       const data = response.data.data.erc721Tokens.results;
       setGenkaiLists(data);
       return data;

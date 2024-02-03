@@ -1,34 +1,35 @@
 const getLandsSales = (size) => `
-query GetSalesLands {
+query getLandsSales {
     settledAuctions {
-    lands(from: 0, size: ${size}) {
+      lands(from: 0, size: ${size}) {
         results {
-        landType
-        col
-        row
-        tokenId
-        owner
-        ownerProfile {
+          landType
+          col
+          row
+          tokenId
+          owner
+          ownerProfile {
             name
           }
-        transferHistory(size: 1) {
+          transferHistory(size: 10) {
             results {
-                withPriceUsd
-                timestamp
-                withPrice
-                fromProfile{
-                    name
-                    addresses {
-                        ronin
-                    }
+              timestamp
+              withPrice
+              fromProfile {
+                name
+                addresses {
+                  ronin
                 }
+              }
+              txHash
             }
+            total
           }
         }
         total
+      }
     }
-    }
-}
+  }
 `;
 
 export default getLandsSales;
