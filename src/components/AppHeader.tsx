@@ -103,6 +103,12 @@ export default function AppHeader() {
 
   useEffect(() => {
     fetchData();
+
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 300000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
