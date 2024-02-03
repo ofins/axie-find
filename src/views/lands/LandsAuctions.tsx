@@ -1,21 +1,18 @@
 import { getAxieMarketPlace } from "@/api/axieMarketPlace";
 import { useEffect, useState } from "react";
 import getAuctionsLands from "@/api/query/getAuctionsLands";
-import { redirectMarketLand, redirectProfile } from "@/util/redirect";
+import { redirectMarketLand } from "@/util/redirect";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
-import { customSortArray } from "@/util/sortOrder";
 import Loading from "../../components/Loading";
-import { AXIE_WHALES_MP, AXIE_PROFILE } from "@/settings";
+import { AXIE_WHALES_MP } from "@/settings";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
 import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "../../components/AppTitle";
 import { useMarket } from "@/hooks/useMarket";
@@ -57,15 +54,6 @@ function LandsAuctions() {
       fetchData("100", land);
     });
   };
-
-  // const updateSortLandLists = (landType) => {
-  //   console.log('1')
-  //   const data = customSortArray(landLists[landType]?.highestOffer.currentPrice);
-  //   setLandLists((prevLandList) => ({
-  //     ...prevLandList,
-  //     [landType]: data,
-  //   }));
-  // };
 
   useEffect(() => {
     fetchAllLandTypes();
