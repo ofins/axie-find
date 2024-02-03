@@ -18,27 +18,30 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { sideNavList } from "@/settings/menuSetting";
+import { useState, useEffect } from "react";
+import { getAxieMarketPlace } from "../api/axieMarketPlace";
+import getExchangeRates from "../api/query/getExchangeRates";
 
 const drawerWidth = 240;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-  open?: boolean;
-}>(({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create("margin", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  }),
-}));
+// const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
+//   open?: boolean;
+// }>(({ theme, open }) => ({
+//   flexGrow: 1,
+//   padding: theme.spacing(3),
+//   transition: theme.transitions.create("margin", {
+//     easing: theme.transitions.easing.sharp,
+//     duration: theme.transitions.duration.leavingScreen,
+//   }),
+//   marginLeft: `-${drawerWidth}px`,
+//   ...(open && {
+//     transition: theme.transitions.create("margin", {
+//       easing: theme.transitions.easing.easeOut,
+//       duration: theme.transitions.duration.enteringScreen,
+//     }),
+//     marginLeft: 0,
+//   }),
+// }));
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -74,6 +77,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function AppHeader() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [exchangeRate, setExchangeRate] = useState();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -82,6 +87,23 @@ export default function AppHeader() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const data = await getAxieMarketPlace(getExchangeRates);
+      setExchangeRate(data.data.data.exchangeRate);
+      console.log(exchangeRate);
+    } catch (error) {
+      console.error(`Error fetching market data`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -102,6 +124,14 @@ export default function AppHeader() {
               AxieFind
             </Typography>
           </NavLink>
+          {!open ? (
+            <div className="ml-20px flex gap-20px w-full flex justify-end  <lg:text-12px">
+              <span>AXS ${exchangeRate?.axs.usd}</span>
+              <span>ETH ${exchangeRate?.eth.usd}</span>
+              <span>RON ${exchangeRate?.ron.usd}</span>
+              <span>SLP ${exchangeRate?.slp.usd}</span>
+            </div>
+          ) : null}
         </Toolbar>
       </AppBar>
       <Drawer
