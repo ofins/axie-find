@@ -59,6 +59,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  backgroundColor: theme.palette.primary.main,
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -67,7 +68,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
+  justifyContent: "flex-start",
 }));
 
 export default function AppHeader() {
@@ -133,6 +134,7 @@ export default function AppHeader() {
               <NavLink
                 to={item.path}
                 className="decoration-none text-unset w-full"
+                onClick={handleDrawerClose}
               >
                 <ListItemButton>
                   <ListItemIcon></ListItemIcon>

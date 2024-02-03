@@ -1,5 +1,10 @@
-function Loading() {
-  return <div>{/* <Spinner animation="border" variant="primary" /> */}</div>;
-}
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
-export default Loading;
+export default function Loading() {
+  return (
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress />
+    </Box>
+  );
+}
