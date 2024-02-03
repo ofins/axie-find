@@ -1,21 +1,8 @@
-export const getMavisMarketPlace = async (query: string) => {
-    try {
-      const response = await fetch(
-        "https://axie-find-server.onrender.com/mavis-marketplace",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            query: query,
-          }),
-        }
-      );
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching data", error);
-    }
-  };
-  
+import Http from "@/util/http";
+
+enum Api {
+  MAVIS_MARKETPLACE = "/mavis-marketplace",
+}
+
+export const getMavisMarketPlace = (query: string) =>
+  Http.post(Api.MAVIS_MARKETPLACE, { query: query });

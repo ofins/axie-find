@@ -1,3 +1,5 @@
+export const AXIE_FIND_SERVER = "https://axie-find-server.onrender.com"
+
 export const AXIE_MARKETPLACE = "https://app.axieinfinity.com/marketplace";
 
 export const AXIE_PROFILE = "https://app.axieinfinity.com/profile"
