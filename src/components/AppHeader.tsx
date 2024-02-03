@@ -131,11 +131,23 @@ export default function AppHeader() {
             </Typography>
           </NavLink>
           {!open ? (
-            <div className="ml-20px flex gap-20px w-full flex justify-end  <lg:text-12px">
-              <span>AXS ${exchangeRate?.axs.usd}</span>
-              <span>ETH ${exchangeRate?.eth.usd}</span>
-              <span>RON ${exchangeRate?.ron.usd}</span>
-              <span>SLP ${exchangeRate?.slp.usd}</span>
+            <div className="ml-20px flex gap-20px w-full flex justify-end items-center text-14px  <lg:text-12px">
+              <div className="flex items-center gap-4px h-full ">
+                <img src="/icons/coins/ron.webp" className="h-18px" /> $
+                {exchangeRate?.ron.usd}
+              </div>
+              <div className="flex items-center gap-4px h-full ">
+                <img src="/icons/coins/axs.webp" className="h-18px" /> $
+                {exchangeRate?.axs.usd}
+              </div>
+              <div className="flex items-center gap-4px h-full ">
+                <img src="/icons/coins/eth.webp" className="h-18px" /> $
+                {exchangeRate?.eth.usd}
+              </div>
+              <div className="flex items-center gap-4px h-full ">
+                <img src="/icons/coins/slp.webp" className="h-18px" /> $
+                {exchangeRate?.slp.usd}
+              </div>
             </div>
           ) : null}
         </Toolbar>
