@@ -1,4 +1,4 @@
-const getAuctionsLands = (size: string, landType: string) => `
+const getAuctionsLands = (size, landType: string) => `
 query GetAuctionsLands {
   lands(
     size: ${size}

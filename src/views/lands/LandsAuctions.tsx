@@ -18,50 +18,17 @@ import AppTitle from "../../components/AppTitle";
 import { useLand } from "@/hooks/useMarket";
 import React from "react";
 
-
 function LandsAuctions() {
-  const [landLists, setLandLists] = useState({
-    Savannah: [],
-    Forest: [],
-    Arctic: [],
-    Mystic: [],
-    Genesis: [],
-  });
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
-  const [loading, setLoading] = useState<boolean>(false);
   const title = "Live Land Auctions";
-  const { landTypes, landIcons } = useLand();
-
-  const fetchData = async (size: string, landType: string) => {
-    setLoading(true);
-    try {
-      const response = await getAxieMarketPlace(
-        getAuctionsLands(size, landType)
-      );
-      const data = response.data.data.lands.results;
-      setLandLists((prevLandLists) => ({
-        ...prevLandLists,
-        [landType]: data,
-      }));
-      return data;
-    } catch (error) {
-      console.error(`Error fetching market data`, error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchAllLandTypes = () => {
-    landTypes.forEach((land) => {
-      fetchData("100", land);
-    });
-  };
+  const { landTypes, landIcons, loading, landLists, fetchAllLandsData } =
+    useLand();
 
   useEffect(() => {
-    fetchAllLandTypes();
+    fetchAllLandsData("auctions");
 
     const intervalId = setInterval(() => {
-      fetchAllLandTypes();
+      fetchAllLandsData("auctions");
 
       setLastUpdated(displayCurrentTime());
     }, 300000);

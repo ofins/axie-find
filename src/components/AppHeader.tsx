@@ -94,7 +94,6 @@ export default function AppHeader() {
     try {
       const data = await getAxieMarketPlace(getExchangeRates);
       setExchangeRate(data.data.data.exchangeRate);
-      console.log(exchangeRate);
     } catch (error) {
       console.error(`Error fetching market data`, error);
     } finally {

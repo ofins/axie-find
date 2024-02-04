@@ -24,19 +24,17 @@ function LandsSales() {
     loading,
     landLists,
     updateFrequency,
-    fetchLandSalesData,
+    fetchAllLandsData,
   } = useLand();
 
-  // const [data, setData] = useState<[]>([]);
-  // const [storedValue, setStoredValue] = useState();
   const [lastUpdated, setLastUpdated] = useState<string>(displayCurrentTime());
   const title = "Recently Sold Lands";
 
   useEffect(() => {
-    fetchLandSalesData();
+    fetchAllLandsData("sales");
 
     const intervalId = setInterval(() => {
-      fetchLandSalesData();
+      fetchAllLandsData("sales");
 
       setLastUpdated(displayCurrentTime());
     }, updateFrequency);
@@ -44,21 +42,15 @@ function LandsSales() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const filterLandLists = (type: string) => {
-    return landLists.filter((land) => land.landType === type);
-  };
-
   return (
     <div className="h-full">
       <AppTitle title={title} lastUpdated={lastUpdated} />
       <div className="text-14px grid grid-cols-3 gap-10px <lg:grid-cols-1">
-        {landTypes.map((type, index) => {
-          const filteredLand = filterLandLists(type);
-
+        {landTypes.map((landType, index) => {
           return (
             <div key={index}>
               <h2 className="text-24px">
-                {type} {landIcons[index]}
+                {landType} {landIcons[index]}
               </h2>
               <Paper
                 variant="outlined"
@@ -86,7 +78,7 @@ function LandsSales() {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {filteredLand.map((land, index) => (
+                        {landLists[landType].map((land, index) => (
                           <StyledTableRow
                             key={index}
                             className="whitespace-nowrap"
