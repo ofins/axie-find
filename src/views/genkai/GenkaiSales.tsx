@@ -12,8 +12,10 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import { StyledTableRow } from "@/styles/material/table";
-import AppTitle from "@/components/AppTitle.tsx";
+import AppTitle from "@/components/AppTitle";
 import { redirectRoninTx } from "@/util/redirect";
+import React from "react";
+
 
 function GenkaiSales() {
   const [genkaiLists, setGenkaiLists] = useState([]);

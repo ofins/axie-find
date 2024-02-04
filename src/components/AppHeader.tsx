@@ -21,6 +21,7 @@ import { sideNavList } from "@/settings/menuSetting";
 import { useState, useEffect } from "react";
 import { getAxieMarketPlace } from "../api/axieMarketPlace";
 import getExchangeRates from "../api/query/getExchangeRates";
+import Loading from "./Loading";
 
 const drawerWidth = 240;
 
@@ -132,22 +133,28 @@ export default function AppHeader() {
           </NavLink>
           {!open ? (
             <div className="ml-20px flex gap-20px w-full flex justify-end items-center text-14px  <lg:text-12px">
-              <div className="flex items-center gap-4px h-full ">
-                <img src="/icons/coins/ron.webp" className="h-18px" /> $
-                {exchangeRate?.ron.usd}
-              </div>
-              <div className="flex items-center gap-4px h-full ">
-                <img src="/icons/coins/axs.webp" className="h-18px" /> $
-                {exchangeRate?.axs.usd}
-              </div>
-              <div className="flex items-center gap-4px h-full ">
-                <img src="/icons/coins/eth.webp" className="h-18px" /> $
-                {exchangeRate?.eth.usd}
-              </div>
-              <div className="flex items-center gap-4px h-full ">
-                <img src="/icons/coins/slp.webp" className="h-18px" /> $
-                {exchangeRate?.slp.usd}
-              </div>
+              {!loading ? (
+                <>
+                  <div className="flex items-center gap-4px h-full ">
+                    <img src="/icons/coins/ron.webp" className="h-18px" /> $
+                    {exchangeRate?.ron.usd}
+                  </div>
+                  <div className="flex items-center gap-4px h-full ">
+                    <img src="/icons/coins/axs.webp" className="h-18px" /> $
+                    {exchangeRate?.axs.usd}
+                  </div>
+                  <div className="flex items-center gap-4px h-full ">
+                    <img src="/icons/coins/eth.webp" className="h-18px" /> $
+                    {exchangeRate?.eth.usd}
+                  </div>
+                  <div className="flex items-center gap-4px h-full ">
+                    <img src="/icons/coins/slp.webp" className="h-18px" /> $
+                    {exchangeRate?.slp.usd}
+                  </div>
+                </>
+              ) : (
+                <Loading color="inherit" />
+              )}
             </div>
           ) : null}
         </Toolbar>

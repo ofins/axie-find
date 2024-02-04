@@ -15,7 +15,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "../../components/AppTitle";
-import { useMarket } from "@/hooks/useMarket";
+import { useLand } from "@/hooks/useMarket";
+import React from "react";
+
 
 function LandsAuctions() {
   const [landLists, setLandLists] = useState({
@@ -28,7 +30,7 @@ function LandsAuctions() {
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const [loading, setLoading] = useState<boolean>(false);
   const title = "Live Land Auctions";
-  const { landTypes, landIcons } = useMarket();
+  const { landTypes, landIcons } = useLand();
 
   const fetchData = async (size: string, landType: string) => {
     setLoading(true);
