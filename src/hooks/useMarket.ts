@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { getAxieMarketPlace } from "@/api/axieMarketPlace";
 import getLandsSales from "@/api/query/getLandsSales";
 import getAuctionsLands from "@/api/query/getAuctionsLands";
+import { MoneyConfig, formatMoney } from "@/util/formatMoney";
 
 export const useLand = () => {
   const updateFrequency = 300000;
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const [chartData, setChartData] = useState({});
   const [landLists, setLandLists] = useState({
     Savannah: [],
     Forest: [],
@@ -89,8 +91,33 @@ export const useLand = () => {
     }
   };
 
+  const setScatterData = () => {
+    const result = {};
+    landTypes.map((landType) => {
+      const data = [];
+      landLists[landType].map((land) => {
+        const landData = {
+          x: land.transferHistory?.results[0]?.timestamp,
+          y: formatMoney(
+            land.transferHistory?.results[0]?.withPrice,
+            MoneyConfig.AxieUnit
+          ),
+          id: land.transferHistory?.results[0]?.txHash,
+        };
+        data.push(landData);
+      });
+      result[landType] = data;
+    });
+    return result;
+  };
+
+  useEffect(() => {
+    setChartData(setScatterData());
+  }, [landLists]);
+
   return {
     count,
+    chartData,
     landTypes,
     landIcons,
     loading,
@@ -99,5 +126,6 @@ export const useLand = () => {
     setCount,
     fetchLandSalesData,
     fetchAllLandsData,
+    setScatterData,
   };
 };

@@ -16,9 +16,11 @@ import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "@/components/AppTitle";
 import { useLand } from "@/hooks/useMarket";
 import React from "react";
+import ScatterChartCustom from "../../components/ScatterChartCustom";
 
 function LandsSales() {
   const {
+    chartData,
     landTypes,
     landIcons,
     loading,
@@ -48,10 +50,14 @@ function LandsSales() {
       <div className="text-14px grid grid-cols-3 gap-10px <lg:grid-cols-1">
         {landTypes.map((landType, index) => {
           return (
-            <div key={index}>
+            <div
+              key={index}
+              className="flex flex-col justify-center items-center gap-10px"
+            >
               <h2 className="text-24px">
                 {landType} {landIcons[index]}
               </h2>
+              <ScatterChartCustom data={chartData[landType]} />
               <Paper
                 variant="outlined"
                 square={true}
