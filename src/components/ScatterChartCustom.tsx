@@ -1,11 +1,11 @@
 import * as React from "react";
 import { ScatterChart } from "@mui/x-charts/ScatterChart";
-import SkeletonBasic from "./SkeletonBasic";
+// import SkeletonBasic from "./SkeletonBasic";
 
 export default function ScatterChartCustom(props) {
   const data = props.data ?? [];
 
-  return data.length ? (
+  return (
     <ScatterChart
       width={props.width ?? 500}
       height={props.height ?? 300}
@@ -15,7 +15,5 @@ export default function ScatterChartCustom(props) {
         { min: props.data?.[0]?.x, max: props?.data?.[data.length - 1]?.x },
       ]}
     />
-  ) : (
-    <SkeletonBasic />
   );
 }

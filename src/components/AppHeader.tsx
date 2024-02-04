@@ -26,25 +26,6 @@ import SwitchButton from "./SwitchButton";
 
 const drawerWidth = 240;
 
-// const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
-//   open?: boolean;
-// }>(({ theme, open }) => ({
-//   flexGrow: 1,
-//   padding: theme.spacing(3),
-//   transition: theme.transitions.create("margin", {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   marginLeft: `-${drawerWidth}px`,
-//   ...(open && {
-//     transition: theme.transitions.create("margin", {
-//       easing: theme.transitions.easing.easeOut,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//     marginLeft: 0,
-//   }),
-// }));
-
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -116,26 +97,29 @@ export default function AppHeader() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <NavLink to="/" className="decoration-none text-unset">
-            <Typography variant="h6" noWrap component="div">
-              AxieFind
-            </Typography>
-          </NavLink>
-          {!open ? (
-            <div className="ml-20px flex gap-20px w-full flex justify-end items-center text-14px  <lg:text-12px">
+        <Toolbar className="flex justify-between">
+          <div className="flex items-center">
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: "none" }) }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <NavLink to="/" className="decoration-none text-unset">
+              <Typography variant="h6" noWrap component="div">
+                AxieFind
+              </Typography>
+            </NavLink>
+          </div>
+          <div className="flex items-center">
+            {/* {!open ? ( */}
+            <div className="ml-20px flex gap-20px flex justify-end items-center text-14px <lg:text-12px">
               {!loading ? (
                 <>
-                  <div className="flex items-center gap-4px h-full ">
+                  <div className="flex items-center gap-4px h-full">
                     <img src="/icons/coins/ron.webp" className="h-18px" /> $
                     {exchangeRate?.ron.usd}
                   </div>
@@ -156,8 +140,9 @@ export default function AppHeader() {
                 <Loading color="inherit" />
               )}
             </div>
-          ) : null}
-          <SwitchButton />
+            {/* ) : null} */}
+            <SwitchButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer

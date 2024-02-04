@@ -47,12 +47,12 @@ function LandsSales() {
   return (
     <div className="h-full">
       <AppTitle title={title} lastUpdated={lastUpdated} />
-      <div className="text-14px grid grid-cols-3 gap-10px <lg:grid-cols-1">
+      <div className="text-14px grid grid-cols-3 items-center gap-10px <lg:grid-cols-1">
         {landTypes.map((landType, index) => {
           return (
             <div
               key={index}
-              className="flex flex-col justify-center items-center gap-10px"
+              className="flex flex-col justify-center items-start <lg:items-center gap-10px"
             >
               <h2 className="text-24px">
                 {landType} {landIcons[index]}
