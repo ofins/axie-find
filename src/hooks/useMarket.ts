@@ -133,6 +133,7 @@ export const useLand = () => {
 };
 
 export const useGenkai = () => {
+  const updateFrequency = 300000;
   const [genkaiLists, setGenkaiLists] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [chartData, setChartData] = useState({});
@@ -165,14 +166,20 @@ export const useGenkai = () => {
 
     return data;
   };
+
   useEffect(() => {
     setChartData(setScatterData());
   }, [genkaiLists]);
+
+  useEffect(() => {
+    console.log(chartData);
+  }, [chartData]);
 
   return {
     genkaiLists,
     chartData,
     loading,
+    updateFrequency,
     fetchGenkaiSales,
   };
 };

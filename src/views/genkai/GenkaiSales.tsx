@@ -21,14 +21,15 @@ import ScatterChartCustom from "@/components/ScatterChartCustom";
 function GenkaiSales() {
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const title = "Recent Genkai Sales";
-  const { genkaiLists, chartData, loading, fetchGenkaiSales } = useGenkai();
+  const { genkaiLists, chartData, loading, updateFrequency, fetchGenkaiSales } =
+    useGenkai();
 
   useEffect(() => {
     fetchGenkaiSales();
 
     const intervalId = setInterval(() => {
       setLastUpdated(displayCurrentTime());
-    }, 300000);
+    }, updateFrequency);
 
     return () => clearInterval(intervalId);
   }, []);
