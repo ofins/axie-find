@@ -3,7 +3,7 @@ import SubTabs from "@/components/genkai/SubTabs.tsx";
 
 const GenkaiLayout = () => {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full overflow-x-hidden">
       <div className="h-64px w-full" />
       <SubTabs />
       <Outlet />
