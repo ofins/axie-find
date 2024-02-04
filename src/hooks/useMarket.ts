@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { getAxieMarketPlace } from "@/api/axieMarketPlace";
+import { getMavisMarketPlace } from "@/api/mavisMarketPlace";
 import getLandsSales from "@/api/query/getLandsSales";
 import getAuctionsLands from "@/api/query/getAuctionsLands";
+import getGenkaiSales from "@/api/query/getGenkaiSales";
 import { MoneyConfig, formatMoney } from "@/util/formatMoney";
 
 export const useLand = () => {
@@ -127,5 +129,50 @@ export const useLand = () => {
     fetchLandSalesData,
     fetchAllLandsData,
     setScatterData,
+  };
+};
+
+export const useGenkai = () => {
+  const [genkaiLists, setGenkaiLists] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [chartData, setChartData] = useState({});
+
+  const fetchGenkaiSales = async () => {
+    setLoading(true);
+    try {
+      const response = await getMavisMarketPlace(getGenkaiSales);
+      const data = response.data.data.recentlySolds.results;
+
+      setGenkaiLists(data);
+      return data;
+    } catch (error) {
+      console.error(`Error fetching market data`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setScatterData = () => {
+    const data = [];
+    genkaiLists.map((genkai) => {
+      const genkaiData = {
+        x: genkai?.timestamp,
+        y: formatMoney(genkai?.realPrice, MoneyConfig.MavisUnit),
+        id: genkai?.txHash,
+      };
+      data.push(genkaiData);
+    });
+
+    return data;
+  };
+  useEffect(() => {
+    setChartData(setScatterData());
+  }, [genkaiLists]);
+
+  return {
+    genkaiLists,
+    chartData,
+    loading,
+    fetchGenkaiSales,
   };
 };

@@ -22,7 +22,7 @@ import { ThemeProvider } from "@mui/material/styles";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={lightTheme}>
+      <ThemeProvider theme={darkTheme}>
         <Routes>
           <Route path="/" element={<LayoutBase />}>
             <Route index element={<Home />} />

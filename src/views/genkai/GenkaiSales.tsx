@@ -15,32 +15,16 @@ import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "@/components/AppTitle";
 import { redirectRoninTx } from "@/util/redirect";
 import React from "react";
-
+import { useGenkai } from "@/hooks/useMarket";
+import ScatterChartCustom from "@/components/ScatterChartCustom";
 
 function GenkaiSales() {
-  const [genkaiLists, setGenkaiLists] = useState([]);
-
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
-  const [loading, setLoading] = useState<boolean>(false);
   const title = "Recent Genkai Sales";
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await getMavisMarketPlace(getGenkaiSales);
-      const data = response.data.data.recentlySolds.results;
-
-      setGenkaiLists(data);
-      return data;
-    } catch (error) {
-      console.error(`Error fetching market data`, error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { genkaiLists, chartData, loading, fetchGenkaiSales } = useGenkai();
 
   useEffect(() => {
-    fetchData();
+    fetchGenkaiSales();
 
     const intervalId = setInterval(() => {
       setLastUpdated(displayCurrentTime());
@@ -60,7 +44,7 @@ function GenkaiSales() {
         >
           <TableContainer sx={{ maxHeight: 600, maxWidth: 600 }}>
             {loading ? (
-              <div className="h-350px flex justify-center items-center">
+              <div className="h-600px flex justify-center items-center">
                 <Loading />
               </div>
             ) : (
@@ -110,6 +94,7 @@ function GenkaiSales() {
             )}
           </TableContainer>
         </Paper>
+        <ScatterChartCustom width={600} height={400} data={chartData} />
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ import { useState, useEffect } from "react";
 import { getAxieMarketPlace } from "../api/axieMarketPlace";
 import getExchangeRates from "../api/query/getExchangeRates";
 import Loading from "./Loading";
+import SwitchButton from "./SwitchButton";
 
 const drawerWidth = 240;
 
@@ -63,7 +64,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.primary.secondary,
 }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -156,6 +157,7 @@ export default function AppHeader() {
               )}
             </div>
           ) : null}
+          <SwitchButton />
         </Toolbar>
       </AppBar>
       <Drawer

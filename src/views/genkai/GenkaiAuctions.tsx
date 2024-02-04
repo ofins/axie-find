@@ -53,7 +53,7 @@ const GenkaiAuctions = () => {
       <Paper variant="outlined" square={true} sx={{ overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 600 }}>
           {loading ? (
-            <div className="h-350px flex justify-center items-center">
+            <div className="h-600px flex justify-center items-center">
               <Loading />
             </div>
           ) : (

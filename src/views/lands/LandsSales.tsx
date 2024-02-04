@@ -30,7 +30,7 @@ function LandsSales() {
   } = useLand();
 
   const [lastUpdated, setLastUpdated] = useState<string>(displayCurrentTime());
-  const title = "Recently Sold Lands";
+  const title = "Recent Land Sales";
 
   useEffect(() => {
     fetchAllLandsData("sales");

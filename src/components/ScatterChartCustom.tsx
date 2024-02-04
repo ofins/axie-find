@@ -7,8 +7,8 @@ export default function ScatterChartCustom(props) {
 
   return data.length ? (
     <ScatterChart
-      width={500}
-      height={300}
+      width={props.width ?? 500}
+      height={props.height ?? 300}
       sx={{ maxWidth: "90vw" }}
       series={[{ data, id: "pvId" }]}
       xAxis={[

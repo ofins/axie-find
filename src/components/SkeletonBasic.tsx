@@ -14,7 +14,7 @@ export default function SkeletonBasic(props) {
       }}
     >
       <Skeleton
-        sx={{ bgcolor: "grey.100" }}
+        sx={{ bgcolor: "grey.900" }}
         variant="rectangular"
         width={props.width ?? 300}
         height={props.height ?? 200}
