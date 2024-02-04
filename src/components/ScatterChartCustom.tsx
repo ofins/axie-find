@@ -5,7 +5,7 @@ import { ScatterChart } from "@mui/x-charts/ScatterChart";
 export default function ScatterChartCustom(props) {
   const data = props.data ?? [];
 
-  return (
+  return data.length ? (
     <ScatterChart
       width={props.width ?? 500}
       height={props.height ?? 300}
@@ -15,5 +15,7 @@ export default function ScatterChartCustom(props) {
         { min: props.data?.[0]?.x, max: props?.data?.[data.length - 1]?.x },
       ]}
     />
+  ) : (
+    <div className="w-500px h-300px bg-transparent" />
   );
 }
