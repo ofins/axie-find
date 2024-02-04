@@ -54,7 +54,7 @@ function LandsSales() {
               key={index}
               className="flex flex-col justify-center items-start <lg:items-center gap-10px"
             >
-              <h2 className="text-24px w-full">
+              <h2 className="text-24px">
                 {landType} {landIcons[index]}
               </h2>
               <ScatterChartCustom data={chartData[landType]} />
