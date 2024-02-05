@@ -14,15 +14,14 @@ export default function SwitchButton() {
     setChecked(event.target.checked);
   };
 
-  React.useEffect(() => {
-    dispatch(toggleTheme());
-  }, [checked]);
-
   return (
     <Switch
       color={"info"}
-      checked={checked}
-      onChange={handleChange}
+      checked={themeMode === "dark" ? checked : !checked}
+      onChange={() => {
+        handleChange;
+        dispatch(toggleTheme());
+      }}
       inputProps={{ "aria-label": "controlled" }}
     />
   );
