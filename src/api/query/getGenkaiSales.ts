@@ -1,7 +1,13 @@
-const getGenkaiSales = `
-query getGenkaiSales {
+import { gql } from "graphql-request";
+import { AXIE_FIND_SERVER } from "@/settings/index";
+import { gqlRequest } from ".";
+
+export const endpoint = `${AXIE_FIND_SERVER}/mavis-marketplace`;
+
+const genkaiSalesQuery = gql`
+  query getGenkaiSales {
     recentlySolds(
-      from: 10
+      from: 0
       size: 40
       tokenAddress: "0x1f7c16fce4fc894143afb5545bf04f676bf7dcf3"
     ) {
@@ -25,5 +31,7 @@ query getGenkaiSales {
     }
   }
 `;
+
+const getGenkaiSales = () => gqlRequest(endpoint, genkaiSalesQuery);
 
 export default getGenkaiSales;

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAxieMarketPlace } from "@/api/axieMarketPlace";
-import { getMavisMarketPlace } from "@/api/mavisMarketPlace";
+import getExchangeRates from "@/api/query/getExchangeRates";
 import getLandsSales from "@/api/query/getLandsSales";
 import getAuctionsLands from "@/api/query/getAuctionsLands";
 import getGenkaiSales from "@/api/query/getGenkaiSales";
@@ -127,8 +126,8 @@ export const useGenkai = () => {
   const fetchGenkaiSales = async () => {
     setLoading(true);
     try {
-      const response = await getMavisMarketPlace(getGenkaiSales);
-      const data = response.data.data.recentlySolds.results;
+      const response = await getGenkaiSales();
+      const data = response.data.recentlySolds.results;
 
       setGenkaiLists(data);
       return data;
@@ -163,5 +162,30 @@ export const useGenkai = () => {
     loading,
     updateFrequency,
     fetchGenkaiSales,
+  };
+};
+
+export const useExchangeRate = () => {
+  const updateFrequency = 300000;
+  const [exchangeRate, setExchangeRate] = useState();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchExchangeRate = async () => {
+    setLoading(true);
+    try {
+      const data = await getExchangeRates();
+      setExchangeRate(data.data.exchangeRate);
+    } catch (error) {
+      console.error(`Error fetching market data`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    exchangeRate,
+    loading,
+    updateFrequency,
+    fetchExchangeRate,
   };
 };

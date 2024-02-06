@@ -23,6 +23,7 @@ import { getAxieMarketPlace } from "../api/axieMarketPlace";
 import getExchangeRates from "../api/query/getExchangeRates";
 import Loading from "./Loading";
 import SwitchButton from "./SwitchButton";
+import { useExchangeRate } from "@/hooks/useMarket";
 
 const drawerWidth = 240;
 
@@ -58,10 +59,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function AppHeader() {
+  const { exchangeRate, loading, fetchExchangeRate, updateFrequency } =
+    useExchangeRate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [exchangeRate, setExchangeRate] = useState();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -71,24 +72,12 @@ export default function AppHeader() {
     setOpen(false);
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const data = await getAxieMarketPlace(getExchangeRates);
-      setExchangeRate(data.data.data.exchangeRate);
-    } catch (error) {
-      console.error(`Error fetching market data`, error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
+    fetchExchangeRate();
 
     const intervalId = setInterval(() => {
-      fetchData();
-    }, 300000);
+      fetchExchangeRate();
+    }, updateFrequency);
 
     return () => clearInterval(intervalId);
   }, []);

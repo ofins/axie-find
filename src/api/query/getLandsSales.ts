@@ -1,5 +1,6 @@
-import request, { gql } from "graphql-request";
+import { gql } from "graphql-request";
 import { AXIE_FIND_SERVER } from "@/settings/index";
+import { gqlRequest } from ".";
 
 export const endpoint = `${AXIE_FIND_SERVER}/axie-marketplace`;
 
@@ -37,14 +38,6 @@ const landSalesQuery = gql`
   }
 `;
 
-const getLandsSales = async () => {
-  try {
-    return await request(endpoint, landSalesQuery, {
-      size: 500,
-    });
-  } catch (error) {
-    console.error(`Error in getAuctionsLands request`, error);
-  }
-};
+const getLandsSales = () => gqlRequest(endpoint, landSalesQuery, { size: 500 });
 
 export default getLandsSales;

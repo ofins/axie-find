@@ -26,8 +26,8 @@ const GenkaiAuctions = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await getMavisMarketPlace(getGenkaiAuctions);
-      const data = response.data.data.erc721Tokens.results;
+      const response = await getGenkaiAuctions();
+      const data = response.data.erc721Tokens.results;
       setGenkaiLists(data);
       return data;
     } catch (error) {

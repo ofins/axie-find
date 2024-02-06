@@ -1,6 +1,6 @@
 import Cookies from "universal-cookie";
 
-const cookies = new Cookies(null, { path: "/" });
+const cookies = new Cookies();
 
 export enum CookieKey {
   Theme = "theme",
