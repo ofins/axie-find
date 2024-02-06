@@ -24,69 +24,55 @@ export const useLand = () => {
 
   const fetchLandSalesData = async () => {
     setLoading(true);
-    try {
-      const response = await getAxieMarketPlace(getLandsSales(300));
-      if (response.status !== 200) {
-        throw new Error(
-          `Error in fetchLandSalesData! Status: ${response.status}`
-        );
-      }
-      const data = response.data.data.settledAuctions.lands.results;
 
-      landTypes.forEach((landType) => {
-        const landArr = [];
-        data.map((land) => {
-          if (land.landType === landType) {
-            landArr.push(land);
-          }
-        });
+    const response = await getLandsSales();
+    const data = response?.data.settledAuctions.lands.results;
 
-        setLandLists((prevLandLists) => ({
-          ...prevLandLists,
-          [landType]: landArr,
-        }));
+    landTypes.forEach((landType) => {
+      const landArr = [];
+      data.map((land) => {
+        if (land.landType === landType) {
+          landArr.push(land);
+        }
       });
-    } catch (error) {
-      console.error(`Error fetching market data`, error);
-    } finally {
-      setLoading(false);
-    }
+      setLandLists((prevLandLists) => ({
+        ...prevLandLists,
+        [landType]: landArr,
+      }));
+    });
+    setLoading(false);
   };
 
-  const fetchLandAuctionsData = async (landType) => {
+  const fetchLandAuctionsData = async () => {
     setLoading(true);
-    try {
-      const response = await getAxieMarketPlace(
-        getAuctionsLands(300, landType)
-      );
-      if (response.status !== 200) {
-        throw new Error(
-          `Error in fetchLandSalesData! Status: ${response.status}`
-        );
-      }
 
-      const data = response.data.data.lands?.results;
+    const response = await getAuctionsLands();
+    const data = response?.data.lands.results;
+
+    landTypes.forEach((landType) => {
+      const landArr = [];
+      data.map((land) => {
+        if (land.landType === landType) {
+          landArr.push(land);
+        }
+      });
 
       setLandLists((prevLandLists) => ({
         ...prevLandLists,
-        [landType]: data,
+        [landType]: landArr,
       }));
-    } catch (error) {
-      console.error(`Error fetching market data`, error);
-    } finally {
-      setLoading(false);
-    }
+    });
+
+    setLoading(false);
   };
 
-  const fetchAllLandsData = (view: string) => {
+  const fetchAllLandsData = async (view: string) => {
     switch (view) {
       case "sales":
         fetchLandSalesData();
         break;
       case "auctions":
-        landTypes.forEach((land) => {
-          fetchLandAuctionsData(land);
-        });
+        fetchLandAuctionsData();
         break;
       default:
         break;
@@ -170,10 +156,6 @@ export const useGenkai = () => {
   useEffect(() => {
     setChartData(setScatterData());
   }, [genkaiLists]);
-
-  useEffect(() => {
-    console.log(chartData);
-  }, [chartData]);
 
   return {
     genkaiLists,

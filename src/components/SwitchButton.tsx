@@ -1,6 +1,5 @@
 import * as React from "react";
 import Switch from "@mui/material/Switch";
-import { CookieKey, setThemeCookie } from "@/util/cookies";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "@/redux/themeSlice";
 

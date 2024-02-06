@@ -115,7 +115,6 @@ export default function AppHeader() {
             </NavLink>
           </div>
           <div className="flex items-center">
-            {/* {!open ? ( */}
             <div className="ml-20px flex gap-20px flex justify-end items-center text-14px <lg:text-12px">
               {!loading ? (
                 <>
@@ -140,7 +139,6 @@ export default function AppHeader() {
                 <Loading color="inherit" />
               )}
             </div>
-            {/* ) : null} */}
             <SwitchButton />
           </div>
         </Toolbar>
