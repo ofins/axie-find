@@ -1,12 +1,7 @@
 import { useState, useEffect } from "react";
-import getExchangeRates from "@/api/query/getExchangeRates";
 import getGenkaiSales from "@/api/query/getGenkaiSales";
 import { MoneyConfig, formatMoney } from "@/util/formatMoney";
-import {
-  fetchLandSales,
-  fetchLandAuctions,
-  fetchExchangeRate,
-} from "@/api/axieMarketPlace";
+import { fetchAxieMarketData } from "@/api/axieMarketPlace";
 
 export const useLand = () => {
   const updateFrequency = 300000;
@@ -27,9 +22,15 @@ export const useLand = () => {
   const fetchLandSalesData = async (size: number = 500) => {
     setLoading(true);
 
-    const response = await fetchLandSales({ size: size });
+    const params = {
+      queryType: "landSalesQuery",
+      variables: {
+        size: size,
+      },
+    };
+
+    const response = await fetchAxieMarketData(params);
     const data = response;
-    console.log(response);
 
     landTypes.forEach((landType) => {
       const landArr = [];
@@ -49,9 +50,15 @@ export const useLand = () => {
   const fetchLandAuctionsData = async (size: number = 500) => {
     setLoading(true);
 
-    const response = await fetchLandAuctions({ size: size });
-    console.log(response);
-    const data = response.results;
+    const params = {
+      queryType: "landsAuctionQuery",
+      variables: {
+        size: size,
+      },
+    };
+
+    const response = await fetchAxieMarketData(params);
+    const data = response;
 
     landTypes.forEach((landType) => {
       const landArr = [];
@@ -178,7 +185,11 @@ export const useExchangeRate = () => {
   const getExchangeRates = async () => {
     setLoading(true);
     try {
-      const response = await fetchExchangeRate();
+      const params = {
+        queryType: "exchangeRatesQuery",
+      };
+
+      const response = await fetchAxieMarketData(params);
       setExchangeRate(response);
     } catch (error) {
       console.error(`Error fetching market data`, error);

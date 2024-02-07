@@ -22,14 +22,15 @@ export default class Http {
     }
   }
 
-  static async post(endpoint: string, data: unknown) {
+  static async post(endpoint: string, params: unknown) {
+    console.log(params);
     try {
       const response = await fetch(`${AXIE_FIND_SERVER}${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(params),
       });
       return this.handleJSONResponse(response);
     } catch (error) {
