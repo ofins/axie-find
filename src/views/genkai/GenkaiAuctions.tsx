@@ -1,5 +1,3 @@
-import getGenkaiAuctions from "@/api/query/getGenkaiAuctions";
-import { getMavisMarketPlace } from "@/api/mavisMarketPlace";
 import { useEffect, useState } from "react";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
@@ -15,34 +13,25 @@ import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "@/components/AppTitle";
 import { redirectGenkai } from "@/util/redirect";
 import React from "react";
+import { useGenkai } from "@/hooks/useMarket";
 
 const GenkaiAuctions = () => {
-  const [genkaiLists, setGenkaiLists] = useState([]);
+  const { genkaiLists, loading, updateFrequency, fetchGenkaiMarketData } =
+    useGenkai();
 
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
-  const [loading, setLoading] = useState<boolean>(false);
-  const title = "Genkai Auctions Listed";
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await getGenkaiAuctions();
-      const data = response.data.erc721Tokens.results;
-      setGenkaiLists(data);
-      return data;
-    } catch (error) {
-      console.error(`Error fetching market data`, error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const title = "Genkai Auctions Listed";
+  const dataType = "genkaiAuctionsQuery";
 
   useEffect(() => {
-    fetchData();
+    fetchGenkaiMarketData(dataType);
 
     const intervalId = setInterval(() => {
+      fetchGenkaiMarketData(dataType);
+
       setLastUpdated(displayCurrentTime());
-    }, 300000);
+    }, updateFrequency);
 
     return () => clearInterval(intervalId);
   }, []);

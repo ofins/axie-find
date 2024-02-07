@@ -1,5 +1,3 @@
-import getGenkaiSales from "@/api/query/getGenkaiSales";
-import { getMavisMarketPlace } from "@/api/mavisMarketPlace";
 import { useEffect, useState } from "react";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
@@ -21,13 +19,21 @@ import ScatterChartCustom from "@/components/ScatterChartCustom";
 function GenkaiSales() {
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const title = "Recent Genkai Sales";
-  const { genkaiLists, chartData, loading, updateFrequency, fetchGenkaiSales } =
-    useGenkai();
+  const dataType = "genkaiSalesQuery"
+
+  const {
+    genkaiLists,
+    chartData,
+    loading,
+    updateFrequency,
+    fetchGenkaiMarketData,
+  } = useGenkai();
 
   useEffect(() => {
-    fetchGenkaiSales();
+    fetchGenkaiMarketData(dataType);
 
     const intervalId = setInterval(() => {
+      fetchGenkaiMarketData(dataType);
       setLastUpdated(displayCurrentTime());
     }, updateFrequency);
 
