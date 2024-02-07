@@ -135,7 +135,6 @@ export const useLand = () => {
         }
       });
     });
-    console.log(results);
     return results;
   };
 
