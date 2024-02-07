@@ -2,7 +2,13 @@ import * as React from "react";
 import { ScatterChart } from "@mui/x-charts/ScatterChart";
 
 export default function ScatterChartCustom(props) {
-  const data = props.data ?? [];
+  type Data = {
+    x?: number;
+    y?: number;
+    id?: string | number;
+  };
+
+  const data: Data = props.data ?? [];
 
   return data.length ? (
     <ScatterChart
