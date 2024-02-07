@@ -90,33 +90,59 @@ export const useLand = () => {
     }
   };
 
-  const setScatterData = () => {
-    const result = {};
-    landTypes.map((landType) => {
-      const data = [];
-      landLists[landType].map((land) => {
-        const landData = {
-          x: land.transferHistory?.results[0]?.timestamp,
-          y: formatMoney(
-            land.transferHistory?.results[0]?.withPrice,
-            MoneyConfig.AxieUnit
-          ),
-          id: land.transferHistory?.results[0]?.txHash,
+  const createLandSalesChartData = () => {
+    const results = {};
+
+    landTypes.forEach((landType) => {
+      const typeData = landLists[landType].map((land) => {
+        const { timestamp, withPrice, txHash } =
+          land.transferHistory?.results[0] ?? {};
+
+        const formattedPrice = formatMoney(withPrice, MoneyConfig.AxieUnit);
+
+        return {
+          x: timestamp,
+          y: formattedPrice,
+          id: txHash,
         };
-        data.push(landData);
       });
-      result[landType] = data;
+
+      results[landType] = typeData;
     });
-    return result;
+
+    return results;
   };
 
-  useEffect(() => {
-    setChartData(setScatterData());
-  }, [landLists]);
+  const createLandAuctionsChartData = () => {
+    const results = {};
+    landTypes.forEach((landType) => {
+      results[landType] = { ask: [], bid: [] };
+
+      landLists[landType].map((land) => {
+        const askPrice = formatMoney(
+          land?.order?.currentPrice ?? 0,
+          MoneyConfig.AxieUnit
+        );
+        const bidPrice = formatMoney(
+          land.transferHistory?.results[0]?.withPrice ?? 0,
+          MoneyConfig.AxieUnit
+        );
+        if (askPrice) {
+          results[landType].ask.push(askPrice);
+        }
+        if (bidPrice) {
+          results[landType].bid.push(bidPrice);
+        }
+      });
+    });
+    console.log(results);
+    return results;
+  };
 
   return {
     count,
     chartData,
+    setChartData,
     landTypes,
     landIcons,
     loading,
@@ -125,7 +151,8 @@ export const useLand = () => {
     setCount,
     fetchLandSalesData,
     fetchAllLandsData,
-    setScatterData,
+    createLandSalesChartData,
+    createLandAuctionsChartData,
   };
 };
 
