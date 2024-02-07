@@ -1,6 +1,4 @@
-import { getAxieMarketPlace } from "@/api/axieMarketPlace";
 import { useEffect, useState } from "react";
-import getAuctionsLands from "@/api/query/getAuctionsLands";
 import { redirectMarketLand } from "@/util/redirect";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";

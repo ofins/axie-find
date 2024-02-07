@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -18,9 +18,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { sideNavList } from "@/settings/menuSetting";
-import { useState, useEffect } from "react";
-import { getAxieMarketPlace } from "../api/axieMarketPlace";
-import getExchangeRates from "../api/query/getExchangeRates";
+import { useEffect } from "react";
 import Loading from "./Loading";
 import SwitchButton from "./SwitchButton";
 import { useExchangeRate } from "@/hooks/useMarket";

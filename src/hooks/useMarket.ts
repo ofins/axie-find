@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import getGenkaiSales from "@/api/query/getGenkaiSales";
 import { MoneyConfig, formatMoney } from "@/util/formatMoney";
 import { fetchAxieMarketData } from "@/api/axieMarketPlace";
+import { fetchMavisMarketData } from "@/api/mavisMarketPlace";
 
 export const useLand = () => {
   const updateFrequency = 300000;
@@ -135,12 +135,15 @@ export const useGenkai = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [chartData, setChartData] = useState({});
 
-  const fetchGenkaiSales = async () => {
+  const fetchGenkaiMarketData = async (dataType: string) => {
+    const params = {
+      queryType: dataType,
+    };
+
     setLoading(true);
     try {
-      const response = await getGenkaiSales();
-      const data = response.data.recentlySolds.results;
-
+      const response = await fetchMavisMarketData(params);
+      const data = response;
       setGenkaiLists(data);
       return data;
     } catch (error) {
@@ -173,7 +176,7 @@ export const useGenkai = () => {
     chartData,
     loading,
     updateFrequency,
-    fetchGenkaiSales,
+    fetchGenkaiMarketData,
   };
 };
 

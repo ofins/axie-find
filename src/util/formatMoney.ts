@@ -11,19 +11,15 @@ export const formatMoney = (
   num: string | number,
   config = MoneyConfig.Default
 ) => {
-  if (typeof num === "string") {
-    num = parseFloat(num);
-  }
-
   if (isNaN(num)) {
     return "N/A";
   }
 
   if (config === MoneyConfig.Default) {
-    return num?.toFixed(3);
+    return parseFloat(num?.toFixed(3));
   } else if (config === MoneyConfig.AxieUnit) {
-    return (num / AxieBaseUnit).toFixed(3);
+    return parseFloat((num / AxieBaseUnit).toFixed(3));
   } else if (config === MoneyConfig.MavisUnit) {
-    return (num / MavisBaseUnit).toFixed(0);
+    return parseFloat((num / MavisBaseUnit).toFixed(0));
   }
 };
