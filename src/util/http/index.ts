@@ -23,7 +23,6 @@ export default class Http {
   }
 
   static async post(endpoint: string, params: unknown) {
-    console.log(params);
     try {
       const response = await fetch(`${AXIE_FIND_SERVER}${endpoint}`, {
         method: "POST",
