@@ -15,7 +15,7 @@ import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "../../components/AppTitle";
 import { useLand } from "@/hooks/useMarket";
 import React from "react";
-import LandAuctionsBidAskChart from "@/components/LandAuctionsBidAskChart";
+import AuctionsBidAskChart from "../../components/AuctionsBidAskChart";
 
 function LandsAuctions() {
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
@@ -54,7 +54,7 @@ function LandsAuctions() {
               <h2 className="text-24px text-start">
                 {type} {landIcons[index]}
               </h2>
-              <LandAuctionsBidAskChart data={chartData[type]} />
+              <AuctionsBidAskChart data={chartData[type]} />
               <div
                 key={index}
                 className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"

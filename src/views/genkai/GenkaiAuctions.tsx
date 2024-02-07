@@ -14,10 +14,16 @@ import AppTitle from "@/components/AppTitle";
 import { redirectGenkai } from "@/util/redirect";
 import React from "react";
 import { useGenkai } from "@/hooks/useMarket";
+import AuctionsBidAskChart from "@/components/AuctionsBidAskChart";
 
 const GenkaiAuctions = () => {
-  const { genkaiLists, loading, updateFrequency, fetchGenkaiMarketData } =
-    useGenkai();
+  const {
+    genkaiLists,
+    loading,
+    updateFrequency,
+    fetchGenkaiMarketData,
+    createGenkaiAuctionsChartData,
+  } = useGenkai();
 
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
 
@@ -35,6 +41,8 @@ const GenkaiAuctions = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const chartData = createGenkaiAuctionsChartData();
 
   return (
     <div className="h-full w-full">
@@ -124,6 +132,9 @@ const GenkaiAuctions = () => {
           )}
         </TableContainer>
       </Paper>
+      <div className="mt-100px">
+        <AuctionsBidAskChart data={chartData} width={1000} height={700} />
+      </div>
     </div>
   );
 };

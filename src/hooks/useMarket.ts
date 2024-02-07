@@ -124,15 +124,11 @@ export const useLand = () => {
           MoneyConfig.AxieUnit
         );
         const bidPrice = formatMoney(
-          land.transferHistory?.results[0]?.withPrice ?? 0,
+          land.highestOffer?.currentPrice ?? 0,
           MoneyConfig.AxieUnit
         );
-        if (askPrice) {
-          results[landType].ask.push(askPrice);
-        }
-        if (bidPrice) {
-          results[landType].bid.push(bidPrice);
-        }
+        results[landType].ask.push(askPrice);
+        results[landType].bid.push(bidPrice);
       });
     });
     return results;
@@ -179,7 +175,7 @@ export const useGenkai = () => {
     }
   };
 
-  const createGenkaiSalesChart = () => {
+  const createGenkaiSalesChartData = () => {
     const data = [];
     genkaiLists.map((genkai) => {
       const genkaiData = {
@@ -193,16 +189,30 @@ export const useGenkai = () => {
     return data;
   };
 
-  // useEffect(() => {
-  //   setChartData(setScatterData());
-  // }, [genkaiLists]);
+  const createGenkaiAuctionsChartData = () => {
+    const results = { ask: [], bid: [] };
+    genkaiLists.map((genkai) => {
+      const askPrice = formatMoney(
+        genkai?.order?.currentPrice ?? 0,
+        MoneyConfig.AxieUnit
+      );
+      const bidPrice = formatMoney(
+        genkai?.offers[0]?.currentPrice ?? 0,
+        MoneyConfig.AxieUnit
+      );
+      results.ask.push(askPrice);
+      results.bid.push(bidPrice);
+    });
+    return results;
+  };
 
   return {
     genkaiLists,
     chartData,
     loading,
     updateFrequency,
-    createGenkaiSalesChart,
+    createGenkaiSalesChartData,
+    createGenkaiAuctionsChartData,
     fetchGenkaiMarketData,
   };
 };

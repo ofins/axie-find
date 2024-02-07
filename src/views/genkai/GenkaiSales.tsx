@@ -19,13 +19,13 @@ import ScatterChartCustom from "@/components/ScatterChartCustom";
 function GenkaiSales() {
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const title = "Recent Genkai Sales";
-  const dataType = "genkaiSalesQuery"
+  const dataType = "genkaiSalesQuery";
 
   const {
     genkaiLists,
     loading,
     updateFrequency,
-    createGenkaiSalesChart,
+    createGenkaiSalesChartData,
     fetchGenkaiMarketData,
   } = useGenkai();
 
@@ -40,7 +40,7 @@ function GenkaiSales() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const chartData = createGenkaiSalesChart()
+  const chartData = createGenkaiSalesChartData();
 
   return (
     <div className="h-full w-full">
