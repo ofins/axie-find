@@ -15,12 +15,20 @@ import { StyledTableRow } from "@/styles/material/table";
 import AppTitle from "../../components/AppTitle";
 import { useLand } from "@/hooks/useMarket";
 import React from "react";
+import LandAuctionsBidAskChart from "@/components/LandAuctionsBidAskChart";
 
 function LandsAuctions() {
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const title = "Live Land Auctions";
-  const { landTypes, landIcons, loading, landLists, fetchAllLandsData } =
-    useLand();
+  const {
+    landTypes,
+    landIcons,
+    loading,
+    landLists,
+    updateFrequency,
+    fetchAllLandsData,
+    createLandAuctionsChartData,
+  } = useLand();
 
   useEffect(() => {
     fetchAllLandsData("auctions");
@@ -29,10 +37,12 @@ function LandsAuctions() {
       fetchAllLandsData("auctions");
 
       setLastUpdated(displayCurrentTime());
-    }, 300000);
+    }, updateFrequency);
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const chartData = createLandAuctionsChartData();
 
   return (
     <div className="h-full">
@@ -44,6 +54,7 @@ function LandsAuctions() {
               <h2 className="text-24px text-start">
                 {type} {landIcons[index]}
               </h2>
+              <LandAuctionsBidAskChart data={chartData[type]} />
               <div
                 key={index}
                 className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"

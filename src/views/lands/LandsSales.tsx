@@ -20,13 +20,13 @@ import ScatterChartCustom from "../../components/ScatterChartCustom";
 
 function LandsSales() {
   const {
-    chartData,
     landTypes,
     landIcons,
     loading,
     landLists,
     updateFrequency,
     fetchAllLandsData,
+    createLandSalesChartData,
   } = useLand();
 
   const [lastUpdated, setLastUpdated] = useState<string>(displayCurrentTime());
@@ -43,6 +43,8 @@ function LandsSales() {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const chartData = createLandSalesChartData();
 
   return (
     <div className="h-full">
