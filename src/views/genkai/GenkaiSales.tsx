@@ -23,9 +23,9 @@ function GenkaiSales() {
 
   const {
     genkaiLists,
-    chartData,
     loading,
     updateFrequency,
+    createGenkaiSalesChart,
     fetchGenkaiMarketData,
   } = useGenkai();
 
@@ -39,6 +39,8 @@ function GenkaiSales() {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const chartData = createGenkaiSalesChart()
 
   return (
     <div className="h-full w-full">

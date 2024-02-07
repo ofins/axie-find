@@ -179,7 +179,7 @@ export const useGenkai = () => {
     }
   };
 
-  const setScatterData = () => {
+  const createGenkaiSalesChart = () => {
     const data = [];
     genkaiLists.map((genkai) => {
       const genkaiData = {
@@ -193,15 +193,16 @@ export const useGenkai = () => {
     return data;
   };
 
-  useEffect(() => {
-    setChartData(setScatterData());
-  }, [genkaiLists]);
+  // useEffect(() => {
+  //   setChartData(setScatterData());
+  // }, [genkaiLists]);
 
   return {
     genkaiLists,
     chartData,
     loading,
     updateFrequency,
+    createGenkaiSalesChart,
     fetchGenkaiMarketData,
   };
 };
