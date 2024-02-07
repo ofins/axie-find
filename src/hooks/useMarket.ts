@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import getExchangeRates from "@/api/query/getExchangeRates";
-import getLandsSales from "@/api/query/getLandsSales";
-import getAuctionsLands from "@/api/query/getAuctionsLands";
 import getGenkaiSales from "@/api/query/getGenkaiSales";
 import { MoneyConfig, formatMoney } from "@/util/formatMoney";
+import {
+  fetchLandSales,
+  fetchLandAuctions,
+  fetchExchangeRate,
+} from "@/api/axieMarketPlace";
 
 export const useLand = () => {
   const updateFrequency = 300000;
@@ -21,11 +24,12 @@ export const useLand = () => {
   const landTypes = ["Savannah", "Forest", "Arctic", "Mystic", "Genesis"];
   const landIcons = ["🏝️", "🌲", "🏔️", "🌺", "🏵️"];
 
-  const fetchLandSalesData = async () => {
+  const fetchLandSalesData = async (size: number = 500) => {
     setLoading(true);
 
-    const response = await getLandsSales();
-    const data = response?.data.settledAuctions.lands.results;
+    const response = await fetchLandSales({ size: size });
+    const data = response;
+    console.log(response);
 
     landTypes.forEach((landType) => {
       const landArr = [];
@@ -42,11 +46,12 @@ export const useLand = () => {
     setLoading(false);
   };
 
-  const fetchLandAuctionsData = async () => {
+  const fetchLandAuctionsData = async (size: number = 500) => {
     setLoading(true);
 
-    const response = await getAuctionsLands();
-    const data = response?.data.lands.results;
+    const response = await fetchLandAuctions({ size: size });
+    console.log(response);
+    const data = response.results;
 
     landTypes.forEach((landType) => {
       const landArr = [];
@@ -170,11 +175,11 @@ export const useExchangeRate = () => {
   const [exchangeRate, setExchangeRate] = useState();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchExchangeRate = async () => {
+  const getExchangeRates = async () => {
     setLoading(true);
     try {
-      const data = await getExchangeRates();
-      setExchangeRate(data.data.exchangeRate);
+      const response = await fetchExchangeRate();
+      setExchangeRate(response);
     } catch (error) {
       console.error(`Error fetching market data`, error);
     } finally {
@@ -186,6 +191,6 @@ export const useExchangeRate = () => {
     exchangeRate,
     loading,
     updateFrequency,
-    fetchExchangeRate,
+    getExchangeRates,
   };
 };

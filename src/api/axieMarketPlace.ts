@@ -1,8 +1,15 @@
 import Http from "@/util/http";
 
 enum Api {
-  AXIE_MARKETPLACE = "/axie-marketplace",
+  SALES_URL = "/axie-marketplace/sales",
+  AUCTIONS_URL = "/axie-marketplace/auctions",
+  EXCHANGE_RATES_URL = "/axie-marketplace/exchangeRates",
 }
 
-export const getAxieMarketPlace = (query: string) =>
-  Http.post(Api.AXIE_MARKETPLACE, { query: query });
+export const fetchLandSales = (variables) =>
+  Http.post(Api.SALES_URL, { variables: variables });
+
+export const fetchLandAuctions = (variables) =>
+  Http.post(Api.AUCTIONS_URL, { variables: variables });
+
+export const fetchExchangeRate = () => Http.get(Api.EXCHANGE_RATES_URL);

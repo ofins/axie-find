@@ -59,7 +59,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function AppHeader() {
-  const { exchangeRate, loading, fetchExchangeRate, updateFrequency } =
+  const { exchangeRate, loading, getExchangeRates, updateFrequency } =
     useExchangeRate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -73,10 +73,10 @@ export default function AppHeader() {
   };
 
   useEffect(() => {
-    fetchExchangeRate();
+    getExchangeRates();
 
     const intervalId = setInterval(() => {
-      fetchExchangeRate();
+      getExchangeRates();
     }, updateFrequency);
 
     return () => clearInterval(intervalId);
