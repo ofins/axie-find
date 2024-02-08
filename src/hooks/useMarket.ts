@@ -7,6 +7,7 @@ export const useLand = () => {
   const updateFrequency = 300000;
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [landLists, setLandLists] = useState({
     Savannah: [],
     Forest: [],
@@ -27,21 +28,27 @@ export const useLand = () => {
     };
 
     const response = await fetchAxieMarketData(params);
-    const data = response;
+    const data = response.data;
 
-    landTypes.forEach((landType) => {
-      const landArr = [];
-      data.map((land) => {
-        if (land.landType === landType) {
-          landArr.push(land);
-        }
+    try {
+      landTypes.forEach((landType) => {
+        const landArr = [];
+        data.map((land) => {
+          if (land.landType === landType) {
+            landArr.push(land);
+          }
+        });
+        setLandLists((prevLandLists) => ({
+          ...prevLandLists,
+          [landType]: landArr,
+        }));
       });
-      setLandLists((prevLandLists) => ({
-        ...prevLandLists,
-        [landType]: landArr,
-      }));
-    });
-    setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchLandAuctionsData = async (size: number = 500) => {
@@ -53,7 +60,7 @@ export const useLand = () => {
     };
 
     const response = await fetchAxieMarketData(params);
-    const data = response;
+    const data = response.data;
 
     landTypes.forEach((landType) => {
       const landArr = [];
@@ -134,6 +141,7 @@ export const useLand = () => {
     landTypes,
     landIcons,
     loading,
+    errorMessage,
     landLists,
     updateFrequency,
     setCount,
@@ -220,7 +228,8 @@ export const useExchangeRate = () => {
       };
 
       const response = await fetchAxieMarketData(params);
-      setExchangeRate(response);
+      const data = response.data;
+      setExchangeRate(data);
     } catch (error) {
       console.error(`Error fetching market data`, error);
     } finally {
