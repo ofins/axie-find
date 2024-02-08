@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MoneyConfig, formatMoney } from "@/util/formatMoney";
 import { fetchAxieMarketData } from "@/api/axieMarketPlace";
 import { fetchMavisMarketData } from "@/api/mavisMarketPlace";
@@ -7,7 +7,6 @@ export const useLand = () => {
   const updateFrequency = 300000;
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [chartData, setChartData] = useState({});
   const [landLists, setLandLists] = useState({
     Savannah: [],
     Forest: [],
@@ -132,8 +131,6 @@ export const useLand = () => {
 
   return {
     count,
-    chartData,
-    setChartData,
     landTypes,
     landIcons,
     loading,
@@ -150,15 +147,13 @@ export const useLand = () => {
 export const useGenkai = () => {
   const updateFrequency = 300000;
   const [genkaiLists, setGenkaiLists] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [chartData, setChartData] = useState({});
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchGenkaiMarketData = async (dataType: string) => {
     const params = {
       queryType: dataType,
     };
 
-    setLoading(true);
     try {
       const response = await fetchMavisMarketData(params);
       const data = response;
@@ -204,7 +199,6 @@ export const useGenkai = () => {
 
   return {
     genkaiLists,
-    chartData,
     loading,
     updateFrequency,
     createGenkaiSalesChartData,
