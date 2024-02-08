@@ -20,6 +20,7 @@ import AuctionsBidAskChart from "../../components/AuctionsBidAskChart";
 function LandsAuctions() {
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
   const title = "Live Land Auctions";
+
   const {
     landTypes,
     landIcons,
@@ -40,79 +41,84 @@ function LandsAuctions() {
     }, updateFrequency);
 
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const chartData = createLandAuctionsChartData();
-
   return (
-    <div className="h-full">
-      <AppTitle title={title} lastUpdated={lastUpdated} />
-      <div className="grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <lg:grid-cols-1 <lg:px-8px">
-        {landTypes.map((type, index) => {
-          return (
-            <div key={index}>
-              <h2 className="text-24px text-start">
-                {type} {landIcons[index]}
-              </h2>
-              <AuctionsBidAskChart data={chartData[type]} />
-              <div
-                key={index}
-                className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"
-              >
-                <Paper
-                  variant="outlined"
-                  square={true}
-                  sx={{ width: "100%", overflow: "hidden" }}
-                >
-                  <TableContainer sx={{ maxHeight: 350 }}>
-                    {loading ? (
-                      <div className="h-350px flex justify-center items-center">
-                        <Loading />
-                      </div>
-                    ) : (
-                      <Table
-                        stickyHeader
-                        aria-label="sticky table"
-                        size="small"
-                        className="whitespace-nowrap"
-                      >
-                        <TableHead>
-                          <StyledTableRow>
-                            <TableCell>#</TableCell>
-                            <TableCell align="left">Listed Price</TableCell>
-                            <TableCell align="left">Listed DateTime</TableCell>
-                            <TableCell align="left">Seller</TableCell>
-                            <TableCell align="left">Highest Offer</TableCell>
-                            <TableCell align="left">Owner Buy Price</TableCell>
-                            <TableCell align="left">Bought Date</TableCell>
-                          </StyledTableRow>
-                        </TableHead>
-                        <TableBody>
-                          {landLists[type]?.map((land, index) => (
-                            <StyledTableRow
-                              key={index}
-                              className="whitespace-nowrap"
-                            >
-                              <TableCell>{index + 1}</TableCell>
-                              {land.order ? (
-                                <>
-                                  <TableCell
-                                    onClick={() =>
-                                      redirectMarketLand(land.col, land.row)
-                                    }
-                                    className="cursor-pointer hover:underline fw-700!"
-                                  >
-                                    {formatMoney(
-                                      land.order?.currentPrice,
-                                      MoneyConfig.AxieUnit
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {formatDateTime(land.order?.startedAt)}
-                                  </TableCell>
-                                  {/* Seller */}
-                                  <TableCell
-                                    className={`max-w-120px overflow-x-hidden
+    <div className="h-100vh w-full">
+      {loading ? (
+        <div className="h-full w-full flex justify-center items-center">
+          <Loading />
+        </div>
+      ) : (
+        <>
+          <AppTitle title={title} lastUpdated={lastUpdated} />
+          <div className="grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <lg:grid-cols-1 <lg:px-8px">
+            {landTypes.map((type, index) => {
+              return (
+                <div key={index}>
+                  <h2 className="text-24px text-start">
+                    {type} {landIcons[index]}
+                  </h2>
+                  <AuctionsBidAskChart
+                    data={createLandAuctionsChartData()[type]}
+                  />
+                  <div
+                    key={index}
+                    className="text-center h-70vh overflow-y-scroll h-fit max-h-70vh"
+                  >
+                    <Paper
+                      variant="outlined"
+                      square={true}
+                      sx={{ width: "100%", overflow: "hidden" }}
+                    >
+                      <TableContainer sx={{ maxHeight: 350 }}>
+                        <Table
+                          stickyHeader
+                          aria-label="sticky table"
+                          size="small"
+                          className="whitespace-nowrap"
+                        >
+                          <TableHead>
+                            <StyledTableRow>
+                              <TableCell>#</TableCell>
+                              <TableCell align="left">Listed Price</TableCell>
+                              <TableCell align="left">
+                                Listed DateTime
+                              </TableCell>
+                              <TableCell align="left">Seller</TableCell>
+                              <TableCell align="left">Highest Offer</TableCell>
+                              <TableCell align="left">
+                                Owner Buy Price
+                              </TableCell>
+                              <TableCell align="left">Bought Date</TableCell>
+                            </StyledTableRow>
+                          </TableHead>
+                          <TableBody>
+                            {landLists[type].map((land, index) => (
+                              <StyledTableRow
+                                key={index}
+                                className="whitespace-nowrap"
+                              >
+                                <TableCell>{index + 1}</TableCell>
+                                {land.order ? (
+                                  <>
+                                    <TableCell
+                                      onClick={() =>
+                                        redirectMarketLand(land.col, land.row)
+                                      }
+                                      className="cursor-pointer hover:underline fw-700!"
+                                    >
+                                      {formatMoney(
+                                        land.order.currentPrice,
+                                        MoneyConfig.AxieUnit
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {formatDateTime(land.order.startedAt)}
+                                    </TableCell>
+                                    <TableCell
+                                      className={`max-w-120px overflow-x-hidden
                                     ${
                                       AXIE_WHALES_MP.some(
                                         (whale) => whale.owner === land.owner
@@ -120,47 +126,49 @@ function LandsAuctions() {
                                         ? "italic"
                                         : ""
                                     }`}
-                                  >
-                                    {land.ownerProfile?.name}
-                                  </TableCell>
-                                  <TableCell>
-                                    {formatMoney(
-                                      land.highestOffer?.currentPrice,
-                                      MoneyConfig.AxieUnit
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {formatMoney(
-                                      land.transferHistory.results[0]
-                                        ?.withPrice,
-                                      MoneyConfig.AxieUnit
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {formatDateTime(
-                                      land.transferHistory.results[0]?.timestamp
-                                    )}
-                                  </TableCell>
-                                </>
-                              ) : (
-                                <>
-                                  <TableCell>Not Available</TableCell>
-                                  <TableCell>Not Available</TableCell>
-                                  <TableCell>Not Available</TableCell>
-                                </>
-                              )}
-                            </StyledTableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    )}
-                  </TableContainer>
-                </Paper>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+                                    >
+                                      {land.ownerProfile.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      {formatMoney(
+                                        land.highestOffer?.currentPrice,
+                                        MoneyConfig.AxieUnit
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {formatMoney(
+                                        land.transferHistory.results[0]
+                                          ?.withPrice,
+                                        MoneyConfig.AxieUnit
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {formatDateTime(
+                                        land.transferHistory.results[0]
+                                          ?.timestamp
+                                      )}
+                                    </TableCell>
+                                  </>
+                                ) : (
+                                  <>
+                                    <TableCell>Not Available</TableCell>
+                                    <TableCell>Not Available</TableCell>
+                                    <TableCell>Not Available</TableCell>
+                                  </>
+                                )}
+                              </StyledTableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Paper>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

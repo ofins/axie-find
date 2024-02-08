@@ -1,10 +1,5 @@
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
-import {
-  blueberryTwilightPalette,
-  mangoFusionPalette,
-  cheerfulFiestaPalette,
-} from "@mui/x-charts/colorPalettes";
 
 export default function AuctionsBidAskChart(props) {
   const data = props.data;

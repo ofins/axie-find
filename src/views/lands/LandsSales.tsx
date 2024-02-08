@@ -42,118 +42,121 @@ function LandsSales() {
     }, updateFrequency);
 
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const chartData = createLandSalesChartData();
-
   return (
-    <div className="h-full">
-      <AppTitle title={title} lastUpdated={lastUpdated} />
-      <div className="text-14px grid grid-cols-3 items-center gap-10px <lg:grid-cols-1">
-        {landTypes.map((landType, index) => {
-          return (
-            <div
-              key={index}
-              className="flex flex-col justify-center items-start <lg:items-center gap-10px"
-            >
-              <h2 className="text-24px">
-                {landType} {landIcons[index]}
-              </h2>
-              <ScatterChartCustom data={chartData[landType]} />
-              <Paper
-                variant="outlined"
-                square={true}
-                sx={{ width: "100%", height: 350, overflow: "hidden" }}
-              >
-                <TableContainer sx={{ maxHeight: 350 }}>
-                  {loading ? (
-                    <div className="h-350px flex justify-center items-center">
-                      <Loading />
-                    </div>
-                  ) : (
-                    <Table
-                      stickyHeader
-                      aria-label="sticky table"
-                      size="small"
-                      className="whitespace-nowrap"
-                    >
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>#</TableCell>
-                          <TableCell>Timestamp</TableCell>
-                          <TableCell>Sold</TableCell>
-                          <TableCell>Details</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {landLists[landType].map((land, index) => (
-                          <StyledTableRow
-                            key={index}
-                            className="whitespace-nowrap"
-                          >
-                            <TableCell>{index + 1}</TableCell>
-                            {land.transferHistory.results.length > 0 ? (
-                              <>
-                                <TableCell>
-                                  {formatDateTime(
-                                    land.transferHistory.results[0].timestamp
-                                  )}
-                                </TableCell>
-                                <TableCell
-                                  className="fw-700! hover:underline cursor-pointer"
-                                  onClick={() =>
-                                    redirectMarketLand(land.col, land.row)
-                                  }
-                                >
-                                  {formatMoney(
-                                    land.transferHistory.results[0].withPrice,
-                                    MoneyConfig.AxieUnit
-                                  )}
-                                </TableCell>
-                                <TableCell
-                                  className={`${
-                                    AXIE_WHALES_MP.some(
-                                      (whale) =>
-                                        whale.owner ===
-                                        land.transferHistory.results[0]
-                                          .fromProfile.addresses.ronin
-                                    )
-                                      ? ""
-                                      : ""
-                                  }`}
-                                >
-                                  <div className="flex justify-between">
-                                    <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
-                                      {
-                                        land.transferHistory.results[0]
-                                          .fromProfile.name
-                                      }
-                                    </span>
-                                    <span className="w-fit">➡️</span>
-                                    <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
-                                      {land.ownerProfile?.name}
-                                    </span>
-                                  </div>
-                                </TableCell>
-                              </>
-                            ) : (
-                              <>
-                                <TableCell>Not Available</TableCell>
-                                <TableCell>Not Available</TableCell>
-                                <TableCell>Not Available</TableCell>
-                              </>
-                            )}
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  )}
-                </TableContainer>
-              </Paper>
-            </div>
-          );
-        })}
-      </div>
+    <div className="h-100vh">
+      {loading ? (
+        <div className="h-full w-full flex justify-center items-center">
+          <Loading />
+        </div>
+      ) : (
+        <>
+          <AppTitle title={title} lastUpdated={lastUpdated} />
+          <div className="text-14px grid grid-cols-3 items-center gap-10px <lg:grid-cols-1">
+            {landTypes.map((landType, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col justify-center items-start <lg:items-center gap-10px"
+                >
+                  <h2 className="text-24px">
+                    {landType} {landIcons[index]}
+                  </h2>
+                  <ScatterChartCustom
+                    data={createLandSalesChartData()[landType]}
+                  />
+                  <Paper
+                    variant="outlined"
+                    square={true}
+                    sx={{ width: "100%", height: 350, overflow: "hidden" }}
+                  >
+                    <TableContainer sx={{ maxHeight: 350 }}>
+                      <Table
+                        stickyHeader
+                        aria-label="sticky table"
+                        size="small"
+                        className="whitespace-nowrap"
+                      >
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>#</TableCell>
+                            <TableCell>Timestamp</TableCell>
+                            <TableCell>Sold</TableCell>
+                            <TableCell>Details</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {landLists[landType].map((land, index) => (
+                            <StyledTableRow
+                              key={index}
+                              className="whitespace-nowrap"
+                            >
+                              <TableCell>{index + 1}</TableCell>
+                              {land.transferHistory.results.length > 0 ? (
+                                <>
+                                  <TableCell>
+                                    {formatDateTime(
+                                      land.transferHistory.results[0].timestamp
+                                    )}
+                                  </TableCell>
+                                  <TableCell
+                                    className="fw-700! hover:underline cursor-pointer"
+                                    onClick={() =>
+                                      redirectMarketLand(land.col, land.row)
+                                    }
+                                  >
+                                    {formatMoney(
+                                      land.transferHistory.results[0].withPrice,
+                                      MoneyConfig.AxieUnit
+                                    )}
+                                  </TableCell>
+                                  <TableCell
+                                    className={`${
+                                      AXIE_WHALES_MP.some(
+                                        (whale) =>
+                                          whale.owner ===
+                                          land.transferHistory.results[0]
+                                            .fromProfile.addresses.ronin
+                                      )
+                                        ? ""
+                                        : ""
+                                    }`}
+                                  >
+                                    <div className="flex justify-between">
+                                      <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
+                                        {
+                                          land.transferHistory.results[0]
+                                            .fromProfile.name
+                                        }
+                                      </span>
+                                      <span className="w-fit">➡️</span>
+                                      <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
+                                        {land.ownerProfile?.name}
+                                      </span>
+                                    </div>
+                                  </TableCell>
+                                </>
+                              ) : (
+                                <>
+                                  <TableCell>Not Available</TableCell>
+                                  <TableCell>Not Available</TableCell>
+                                  <TableCell>Not Available</TableCell>
+                                </>
+                              )}
+                            </StyledTableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Paper>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

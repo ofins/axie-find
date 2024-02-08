@@ -6,7 +6,7 @@ import { fetchMavisMarketData } from "@/api/mavisMarketPlace";
 export const useLand = () => {
   const updateFrequency = 300000;
   const [count, setCount] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [chartData, setChartData] = useState({});
   const [landLists, setLandLists] = useState({
     Savannah: [],
@@ -20,8 +20,6 @@ export const useLand = () => {
   const landIcons = ["🏝️", "🌲", "🏔️", "🌺", "🏵️"];
 
   const fetchLandSalesData = async (size: number = 500) => {
-    setLoading(true);
-
     const params = {
       queryType: "landSalesQuery",
       variables: {
@@ -48,8 +46,6 @@ export const useLand = () => {
   };
 
   const fetchLandAuctionsData = async (size: number = 500) => {
-    setLoading(true);
-
     const params = {
       queryType: "landsAuctionQuery",
       variables: {
