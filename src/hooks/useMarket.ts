@@ -164,7 +164,7 @@ export const useGenkai = () => {
 
     try {
       const response = await fetchMavisMarketData(params);
-      const data = response;
+      const data = response.data;
       setGenkaiLists(data);
       return data;
     } catch (error) {
