@@ -158,7 +158,6 @@ export const useGenkai = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
-
   const fetchGenkaiMarketData = async (dataType: string) => {
     const params = {
       queryType: dataType,
@@ -170,7 +169,7 @@ export const useGenkai = () => {
       setGenkaiLists(data);
       return data;
     } catch (error) {
-      setErrorMessage(error)
+      setErrorMessage(error);
       console.error(`Error fetching market data`, error);
     } finally {
       setLoading(false);
@@ -195,11 +194,11 @@ export const useGenkai = () => {
     const results = { ask: [], bid: [] };
     genkaiLists.map((genkai) => {
       const askPrice = formatMoney(
-        genkai?.order?.currentPrice ?? 0,
+        genkai.order.currentPrice,
         MoneyConfig.AxieUnit
       );
       const bidPrice = formatMoney(
-        genkai?.offers[0]?.currentPrice ?? 0,
+        genkai.offers[0]?.currentPrice ?? 0,
         MoneyConfig.AxieUnit
       );
       results.ask.push(askPrice);
