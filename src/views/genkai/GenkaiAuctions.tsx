@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
-import Loading from "../../components/Loading";
+import Loading from "@/components/Loading";
+import Error from "@/components/Error";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -20,6 +21,7 @@ const GenkaiAuctions = () => {
   const {
     genkaiLists,
     loading,
+    errorMessage,
     updateFrequency,
     fetchGenkaiMarketData,
     createGenkaiAuctionsChartData,
@@ -40,7 +42,7 @@ const GenkaiAuctions = () => {
     }, updateFrequency);
 
     return () => clearInterval(intervalId);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -48,6 +50,10 @@ const GenkaiAuctions = () => {
       {loading ? (
         <div className="h-full w-full flex justify-center items-center">
           <Loading />
+        </div>
+      ) : errorMessage ? (
+        <div className="h-full w-full flex justify-center items-center">
+          <Error error={errorMessage} />
         </div>
       ) : (
         <>

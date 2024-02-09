@@ -156,6 +156,8 @@ export const useGenkai = () => {
   const updateFrequency = 300000;
   const [genkaiLists, setGenkaiLists] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
 
   const fetchGenkaiMarketData = async (dataType: string) => {
     const params = {
@@ -168,6 +170,7 @@ export const useGenkai = () => {
       setGenkaiLists(data);
       return data;
     } catch (error) {
+      setErrorMessage(error)
       console.error(`Error fetching market data`, error);
     } finally {
       setLoading(false);
@@ -208,6 +211,7 @@ export const useGenkai = () => {
   return {
     genkaiLists,
     loading,
+    errorMessage,
     updateFrequency,
     createGenkaiSalesChartData,
     createGenkaiAuctionsChartData,

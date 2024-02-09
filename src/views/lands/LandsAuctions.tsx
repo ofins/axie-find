@@ -3,7 +3,7 @@ import { redirectMarketLand } from "@/util/redirect";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
-import Loading from "../../components/Loading";
+import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import { AXIE_WHALES_MP } from "@/settings";
 import Paper from "@mui/material/Paper";
