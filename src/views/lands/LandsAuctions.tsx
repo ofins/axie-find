@@ -4,6 +4,7 @@ import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
 import Loading from "../../components/Loading";
+import Error from "@/components/Error";
 import { AXIE_WHALES_MP } from "@/settings";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -25,6 +26,7 @@ function LandsAuctions() {
     landTypes,
     landIcons,
     loading,
+    errorMessage,
     landLists,
     updateFrequency,
     fetchAllLandsData,
@@ -49,6 +51,10 @@ function LandsAuctions() {
       {loading ? (
         <div className="h-full w-full flex justify-center items-center">
           <Loading />
+        </div>
+      ) : errorMessage ? (
+        <div className="h-full w-full flex justify-center items-center">
+          <Error error={errorMessage} />
         </div>
       ) : (
         <>
