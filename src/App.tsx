@@ -20,7 +20,7 @@ import "@fontsource/roboto/700.css";
 import { ThemeProvider } from "@mui/material/styles";
 
 function App() {
-  const themeMode = useSelector((state) => state.theme.mode);
+  const themeMode = useSelector((state) => state.app.theme);
 
   return (
     <BrowserRouter>
