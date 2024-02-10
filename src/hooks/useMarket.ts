@@ -5,7 +5,6 @@ import { fetchMavisMarketData } from "@/api/mavisMarketPlace";
 
 export const useLand = () => {
   const updateFrequency = 300000;
-  const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [landLists, setLandLists] = useState({
@@ -100,7 +99,7 @@ export const useLand = () => {
         const { timestamp, withPrice, txHash } =
           land.transferHistory?.results[0] ?? {};
 
-        const formattedPrice = formatMoney(withPrice, MoneyConfig.AxieUnit);
+        const formattedPrice = formatMoney(withPrice, MoneyConfig.MarketUnit);
 
         return {
           x: timestamp,
@@ -123,11 +122,11 @@ export const useLand = () => {
       landLists[landType].map((land) => {
         const askPrice = formatMoney(
           land?.order?.currentPrice ?? 0,
-          MoneyConfig.AxieUnit
+          MoneyConfig.MarketUnit
         );
         const bidPrice = formatMoney(
           land.highestOffer?.currentPrice ?? 0,
-          MoneyConfig.AxieUnit
+          MoneyConfig.MarketUnit
         );
         results[landType].ask.push(askPrice);
         results[landType].bid.push(bidPrice);
@@ -137,14 +136,12 @@ export const useLand = () => {
   };
 
   return {
-    count,
     landTypes,
     landIcons,
     loading,
     errorMessage,
     landLists,
     updateFrequency,
-    setCount,
     fetchLandSalesData,
     fetchAllLandsData,
     createLandSalesChartData,
@@ -181,7 +178,7 @@ export const useGenkai = () => {
     genkaiLists.map((genkai) => {
       const genkaiData = {
         x: genkai?.timestamp,
-        y: formatMoney(genkai?.realPrice, MoneyConfig.MavisUnit),
+        y: formatMoney(genkai?.realPrice, MoneyConfig.MarketUnit),
         id: genkai?.txHash,
       };
       data.push(genkaiData);
@@ -195,11 +192,11 @@ export const useGenkai = () => {
     genkaiLists.map((genkai) => {
       const askPrice = formatMoney(
         genkai.order.currentPrice,
-        MoneyConfig.AxieUnit
+        MoneyConfig.MarketUnit
       );
       const bidPrice = formatMoney(
         genkai.offers[0]?.currentPrice ?? 0,
-        MoneyConfig.AxieUnit
+        MoneyConfig.MarketUnit
       );
       results.ask.push(askPrice);
       results.bid.push(bidPrice);
@@ -244,5 +241,43 @@ export const useExchangeRate = () => {
     loading,
     updateFrequency,
     getExchangeRates,
+  };
+};
+
+export const useItem = () => {
+  const updateFrequency = 300000;
+  const [loading, setLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const fetchItemSalesData = async (
+    size: number = 500,
+    tokenType: string = "Consumable"
+  ) => {
+    const params = {
+      queryType: "erc1155TokenSalesQuery",
+      variables: {
+        size: size,
+        tokenType: tokenType,
+      },
+    };
+
+    try {
+      const response = await fetchAxieMarketData(params);
+      const data = response.data;
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      setErrorMessage(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    updateFrequency,
+    loading,
+    errorMessage,
+    fetchItemSalesData,
   };
 };
