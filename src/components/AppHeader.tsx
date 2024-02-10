@@ -23,6 +23,10 @@ import Loading from "./Loading";
 import SwitchButton from "./SwitchButton";
 import { useExchangeRate } from "@/hooks/useMarket";
 
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { TreeView } from "@mui/x-tree-view/TreeView";
+import { TreeItem } from "@mui/x-tree-view/TreeItem";
+
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -154,7 +158,7 @@ export default function AppHeader() {
           version 0.1.0
         </DrawerHeader>
         <Divider />
-        <List>
+        {/* <List>
           {sideNavList.map((item, index) => (
             <ListItem key={index} disablePadding>
               <NavLink
@@ -169,7 +173,73 @@ export default function AppHeader() {
               </NavLink>
             </ListItem>
           ))}
-        </List>
+        </List> */}
+        <Box sx={{ minHeight: 180, flexGrow: 1, maxWidth: 300 }}>
+          <TreeView
+            aria-label="file system navigator"
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+          >
+            <TreeItem nodeId="1" label="Axie Market">
+              <TreeItem
+                disabled
+                nodeId="101"
+                label="Land"
+                className="ml--16px!"
+              />
+              <NavLink
+                to="/lands/sales"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="1011" label="Sales" />
+              </NavLink>
+              <NavLink
+                to="/lands/auctions"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="1012" label="Auctions" />
+              </NavLink>
+              <TreeItem
+                disabled
+                nodeId="102"
+                label="erc1155"
+                className="ml--16px!"
+              />
+              <NavLink
+                to="/items/sales"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="1021" label="Sales" />
+              </NavLink>
+              <NavLink
+                to="/items/auctions"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="1022" label="Auctions" />
+              </NavLink>
+            </TreeItem>
+            <TreeItem nodeId="2" label="Mavis Market">
+              <TreeItem
+                disabled
+                nodeId="201"
+                label="Genkai"
+                className="ml--16px!"
+              />
+              <NavLink
+                to="/genkai/sales"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="2011" label="Sales" />
+              </NavLink>
+              <NavLink
+                to="/genkai/auctions"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="2012" label="Auctions" />
+              </NavLink>
+            </TreeItem>
+          </TreeView>
+        </Box>
         <Divider />
       </Drawer>
     </Box>
