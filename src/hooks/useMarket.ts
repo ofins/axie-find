@@ -220,7 +220,7 @@ export const useGenkai = () => {
 
 export const useExchangeRate = () => {
   const updateFrequency = 300000;
-  const [exchangeRate, setExchangeRate] = useState();
+  const [exchangeRate, setExchangeRate] = useState(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const getExchangeRates = async () => {
