@@ -8,6 +8,7 @@ import LandsSales from "@/views/lands/LandsSales";
 import LandsAuctions from "@/views/lands/LandsAuctions";
 import GenkaiLayout from "@/views/layouts/GenkaiLayout";
 import GenkaiSales from "@/views/genkai/GenkaiSales";
+import GenkaiAuctions from "@/views/genkai/GenkaiAuctions";
 import Home from "@/views/Home";
 import { lightTheme, darkTheme } from "./styles/material/theme";
 import { useSelector } from "react-redux";
@@ -33,7 +34,8 @@ function App() {
               <Route path="auctions" element={<LandsAuctions />} />
             </Route>
             <Route path="/genkai" element={<GenkaiLayout />}>
-              <Route path="auctions" element={<GenkaiSales />} />
+              <Route path="sales" element={<GenkaiSales />} />
+              <Route path="auctions" element={<GenkaiAuctions />} />
             </Route>
           </Route>
         </Routes>
