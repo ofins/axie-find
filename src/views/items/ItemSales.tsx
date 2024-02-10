@@ -7,35 +7,36 @@ import {
   TableBody,
   TableContainer,
   TableHead,
-  TableRow,
   TableCell,
   Paper,
 } from "@mui/material";
 import { StyledTableRow } from "@/styles/material/table";
-
 import { MoneyConfig, formatMoney } from "@/util/formatMoney";
 
 const ItemSales = () => {
   const [lastUpdated, setLastUpdated] = useState<string>(displayCurrentTime());
-  const [itemLists, setItemLists] = useState([]);
 
-  const { updateFrequency, loading, errorMessage, fetchItemSalesData } =
-    useItem();
+  const {
+    itemLists,
+    updateFrequency,
+    loading,
+    errorMessage,
+    fetchItemSalesData,
+  } = useItem();
 
   const title = "Recent Items Sold (coco)";
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchItemSalesData();
-        setItemLists(data);
-        setLastUpdated(displayCurrentTime());
-      } catch (error) {
-        console.error("Error fetching item sales data:", error);
-      }
-    };
+    fetchItemSalesData();
 
-    fetchData();
+    const intervalId = setInterval(() => {
+      fetchItemSalesData();
+
+      setLastUpdated(displayCurrentTime());
+    }, updateFrequency);
+
+    return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(itemLists);

@@ -246,6 +246,7 @@ export const useExchangeRate = () => {
 
 export const useItem = () => {
   const updateFrequency = 300000;
+  const [itemLists, setItemLists] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -264,7 +265,7 @@ export const useItem = () => {
     try {
       const response = await fetchAxieMarketData(params);
       const data = response.data;
-
+      setItemLists(data)
       return data;
     } catch (error) {
       console.error(error);
@@ -275,6 +276,7 @@ export const useItem = () => {
   };
 
   return {
+    itemLists,
     updateFrequency,
     loading,
     errorMessage,
