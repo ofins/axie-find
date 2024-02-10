@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -107,11 +107,11 @@ export default function AppHeader() {
             >
               <MenuIcon />
             </IconButton>
-            <NavLink to="/" className="decoration-none text-unset">
+            <Link to="/" className="decoration-none text-unset">
               <Typography variant="h6" noWrap component="div">
                 AxieFind
               </Typography>
-            </NavLink>
+            </Link>
           </div>
           <div className="flex items-center">
             <div className="ml-20px flex gap-20px flex justify-end items-center text-14px <lg:text-12px">
@@ -179,36 +179,36 @@ export default function AppHeader() {
                 label="Land"
                 className="ml--16px!"
               />
-              <NavLink
+              <Link
                 to="/lands/sales"
                 className="decoration-none text-unset w-full"
               >
                 <TreeItem nodeId="1011" label="Sales" />
-              </NavLink>
-              <NavLink
+              </Link>
+              <Link
                 to="/lands/auctions"
                 className="decoration-none text-unset w-full"
               >
                 <TreeItem nodeId="1012" label="Auctions" />
-              </NavLink>
-              <TreeItem
+              </Link>
+              {/* <TreeItem
                 disabled
                 nodeId="102"
                 label="erc1155"
                 className="ml--16px!"
               />
-              <NavLink
+              <Link
                 to="/items/sales"
                 className="decoration-none text-unset w-full"
               >
                 <TreeItem nodeId="1021" label="Sales" />
-              </NavLink>
-              <NavLink
+              </Link>
+              <Link
                 to="/items/auctions"
                 className="decoration-none text-unset w-full"
               >
                 <TreeItem nodeId="1022" label="Auctions" />
-              </NavLink>
+              </Link> */}
             </TreeItem>
             <TreeItem nodeId="2" label="Mavis Market">
               <TreeItem
@@ -217,18 +217,18 @@ export default function AppHeader() {
                 label="Genkai"
                 className="ml--16px!"
               />
-              <NavLink
+              <Link
                 to="/genkai/sales"
                 className="decoration-none text-unset w-full"
               >
                 <TreeItem nodeId="2011" label="Sales" />
-              </NavLink>
-              <NavLink
+              </Link>
+              <Link
                 to="/genkai/auctions"
                 className="decoration-none text-unset w-full"
               >
                 <TreeItem nodeId="2012" label="Auctions" />
-              </NavLink>
+              </Link>
             </TreeItem>
           </TreeView>
         </Box>
