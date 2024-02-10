@@ -6,7 +6,7 @@ const LandsLayout = () => {
   return (
     <div className="h-full w-full overflow-x-hidden">
       <div className="h-64px w-full" />
-      <SubTabs />
+      {/* <SubTabs /> */}
       <Outlet />
     </div>
   );
