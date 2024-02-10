@@ -47,6 +47,7 @@ const GenkaiAuctions = () => {
 
   return (
     <div className="h-100vh w-full">
+      <AppTitle title={title} lastUpdated={lastUpdated} />
       {loading ? (
         <div className="h-full w-full flex justify-center items-center">
           <Loading />
@@ -57,7 +58,6 @@ const GenkaiAuctions = () => {
         </div>
       ) : (
         <>
-          <AppTitle title={title} lastUpdated={lastUpdated} />
           <div className="mt-16px flex items-center">
             <Paper variant="outlined" square={true} sx={{ overflow: "hidden" }}>
               <TableContainer sx={{ maxHeight: 600 }}>

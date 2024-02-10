@@ -44,6 +44,7 @@ function GenkaiSales() {
 
   return (
     <div className="h-100vh">
+      <AppTitle title={title} lastUpdated={lastUpdated} />
       {loading ? (
         <div className="h-full w-full flex justify-center items-center">
           <Loading />
@@ -54,7 +55,6 @@ function GenkaiSales() {
         </div>
       ) : (
         <>
-          <AppTitle title={title} lastUpdated={lastUpdated} />
           <div className="flex items-center justify-center px-36px pb-48px flex-wrap gap-40px <lg:grid-cols-1 <lg:px-8px">
             <Paper
               variant="outlined"

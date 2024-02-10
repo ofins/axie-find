@@ -48,6 +48,7 @@ function LandsAuctions() {
 
   return (
     <div className="h-100vh w-full">
+      <AppTitle title={title} lastUpdated={lastUpdated} />
       {loading ? (
         <div className="h-full w-full flex justify-center items-center">
           <Loading />
@@ -58,7 +59,6 @@ function LandsAuctions() {
         </div>
       ) : (
         <>
-          <AppTitle title={title} lastUpdated={lastUpdated} />
           <div className="grid grid-cols-2 px-36px pb-48px items-start flex-wrap gap-40px <lg:grid-cols-1 <lg:px-8px">
             {landTypes.map((type, index) => {
               return (

@@ -49,6 +49,7 @@ function LandsSales() {
 
   return (
     <div className="h-100vh">
+      <AppTitle title={title} lastUpdated={lastUpdated} />
       {loading ? (
         <div className="h-full w-full flex justify-center items-center">
           <Loading />
@@ -59,7 +60,6 @@ function LandsSales() {
         </div>
       ) : (
         <>
-          <AppTitle title={title} lastUpdated={lastUpdated} />
           <div className="text-14px grid grid-cols-3 items-center gap-10px <lg:grid-cols-1">
             {landTypes.map((landType, index) => {
               return (
