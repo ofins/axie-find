@@ -6,7 +6,7 @@ import { sideNavList } from "@/settings/menuSetting";
 const Home = () => {
   return (
     <div className="h-100vh w-full flex flex-col justify-center gap-50px items-center">
-      <div className="text-36px">
+      <div className="text-36px animate-fade-in animate-count-1 animate-duration-0.5s">
         Welcome to <strong>AxieFind</strong>
       </div>
       <div className="grid grid-cols-3 gap-14px pb-50px <lg:grid-cols-1">
@@ -15,7 +15,7 @@ const Home = () => {
             <NavLink
               to={item.path}
               key={index}
-              className="decoration-none text-unset"
+              className="decoration-none text-unset animate-fade-in animate-count-1 animate-duration-1s"
             >
               <div className="text-center cursor-pointer hover:translate-y--3 transition-duration-700 transition-ease-in-out">
                 <Paper
@@ -45,7 +45,7 @@ const Home = () => {
           elevation={1}
           square={false}
         >
-          <div className="text-14px">
+          <div className="text-14px animate-fade-in animate-count-1 animate-duration-1s">
             <b>Important:</b> AxieFind is built using free hosting service.
             Initial spin up of server may take up to 30 seconds, please be
             patient.
