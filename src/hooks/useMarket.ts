@@ -221,10 +221,9 @@ export const useGenkai = () => {
 export const useExchangeRate = () => {
   const updateFrequency = 300000;
   const [exchangeRate, setExchangeRate] = useState();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getExchangeRates = async () => {
-    setLoading(true);
     try {
       const params = {
         queryType: "exchangeRatesQuery",

@@ -27,6 +27,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { TreeView } from "@mui/x-tree-view/TreeView";
 import { TreeItem } from "@mui/x-tree-view/TreeItem";
 
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSideMenu } from "@/redux/appSlice";
+
 const drawerWidth = 240;
 
 interface AppBarProps extends MuiAppBarProps {
@@ -64,14 +67,19 @@ export default function AppHeader() {
   const { exchangeRate, loading, getExchangeRates, updateFrequency } =
     useExchangeRate();
   const theme = useTheme();
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
+
+  const isSideMenuOpen = useSelector((state) => state.app.isSideMenuOpen);
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    dispatch(toggleSideMenu());
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    dispatch(toggleSideMenu());
   };
 
   useEffect(() => {
@@ -87,7 +95,7 @@ export default function AppHeader() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={isSideMenuOpen}>
         <Toolbar className="flex justify-between">
           <div className="flex items-center">
             <IconButton
@@ -95,7 +103,7 @@ export default function AppHeader() {
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
-              sx={{ mr: 2, ...(open && { display: "none" }) }}
+              sx={{ mr: 2, ...(isSideMenuOpen && { display: "none" }) }}
             >
               <MenuIcon />
             </IconButton>
@@ -111,19 +119,19 @@ export default function AppHeader() {
                 <>
                   <div className="flex items-center gap-4px h-full">
                     <img src="/icons/coins/ron.webp" className="h-18px" /> $
-                    {exchangeRate?.ron.usd}
+                    {exchangeRate.ron.usd}
                   </div>
                   <div className="flex items-center gap-4px h-full ">
                     <img src="/icons/coins/axs.webp" className="h-18px" /> $
-                    {exchangeRate?.axs.usd}
+                    {exchangeRate.axs.usd}
                   </div>
                   <div className="flex items-center gap-4px h-full ">
                     <img src="/icons/coins/eth.webp" className="h-18px" /> $
-                    {exchangeRate?.eth.usd}
+                    {exchangeRate.eth.usd}
                   </div>
                   <div className="flex items-center gap-4px h-full ">
                     <img src="/icons/coins/slp.webp" className="h-18px" /> $
-                    {exchangeRate?.slp.usd}
+                    {exchangeRate.slp.usd}
                   </div>
                 </>
               ) : (
@@ -145,7 +153,7 @@ export default function AppHeader() {
         }}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={isSideMenuOpen}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -158,22 +166,6 @@ export default function AppHeader() {
           version 0.1.0
         </DrawerHeader>
         <Divider />
-        {/* <List>
-          {sideNavList.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <NavLink
-                to={item.path}
-                className="decoration-none text-unset w-full"
-                onClick={handleDrawerClose}
-              >
-                <ListItemButton>
-                  <ListItemIcon></ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </NavLink>
-            </ListItem>
-          ))}
-        </List> */}
         <Box sx={{ minHeight: 180, flexGrow: 1, maxWidth: 300 }}>
           <TreeView
             aria-label="file system navigator"
