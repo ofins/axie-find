@@ -115,7 +115,7 @@ function LandsSales() {
                                   >
                                     {formatMoney(
                                       land.transferHistory.results[0].withPrice,
-                                      MoneyConfig.AxieUnit
+                                      MoneyConfig.MarketUnit
                                     )}
                                   </TableCell>
                                   <TableCell

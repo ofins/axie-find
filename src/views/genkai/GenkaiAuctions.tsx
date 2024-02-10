@@ -109,7 +109,7 @@ const GenkaiAuctions = () => {
                               >
                                 {formatMoney(
                                   genkai?.order.currentPrice,
-                                  MoneyConfig.MavisUnit
+                                  MoneyConfig.MarketUnit
                                 )}
                               </TableCell>
                               <TableCell>
@@ -118,14 +118,14 @@ const GenkaiAuctions = () => {
                               <TableCell>
                                 {formatMoney(
                                   genkai?.offers[0]?.currentPrice,
-                                  MoneyConfig.MavisUnit
+                                  MoneyConfig.MarketUnit
                                 )}
                               </TableCell>
                               <TableCell>
                                 {formatMoney(
                                   genkai?.transferHistory?.results[0]
                                     ?.withPrice,
-                                  MoneyConfig.MavisUnit
+                                  MoneyConfig.MarketUnit
                                 )}
                               </TableCell>
                               <TableCell>

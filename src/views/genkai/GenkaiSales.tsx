@@ -89,7 +89,7 @@ function GenkaiSales() {
                           >
                             {formatMoney(
                               genkai.realPrice,
-                              MoneyConfig.MavisUnit
+                              MoneyConfig.MarketUnit
                             )}
                           </TableCell>
                         </>

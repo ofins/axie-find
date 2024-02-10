@@ -1,10 +1,9 @@
-const AxieBaseUnit = 1000000000000000000;
-const MavisBaseUnit = 1000000000000000000;
+const MarketUnit = 1000000000000000000;
 
 export enum MoneyConfig {
   Default = "default",
-  AxieUnit = "AxieUnit",
-  MavisUnit = "MavisUnit",
+  MarketUnit = "MarketUnit",
+  SmallNum = "SmallNum",
 }
 
 export const formatMoney = (
@@ -17,9 +16,11 @@ export const formatMoney = (
 
   if (config === MoneyConfig.Default) {
     return parseFloat(num?.toFixed(3));
-  } else if (config === MoneyConfig.AxieUnit) {
-    return parseFloat((num / AxieBaseUnit).toFixed(3));
-  } else if (config === MoneyConfig.MavisUnit) {
-    return parseFloat((num / MavisBaseUnit).toFixed(0));
+  } else if (config === MoneyConfig.MarketUnit) {
+    return parseFloat((num / MarketUnit).toFixed(3));
+  } else if (config === MoneyConfig.MarketUnit) {
+    return parseFloat((num / MarketUnit).toFixed(0));
+  } else if (config === MoneyConfig.SmallNum) {
+    return parseFloat(num / MarketUnit);
   }
 };

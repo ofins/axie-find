@@ -117,7 +117,7 @@ function LandsAuctions() {
                                     >
                                       {formatMoney(
                                         land.order.currentPrice,
-                                        MoneyConfig.AxieUnit
+                                        MoneyConfig.MarketUnit
                                       )}
                                     </TableCell>
                                     <TableCell>
@@ -138,14 +138,14 @@ function LandsAuctions() {
                                     <TableCell>
                                       {formatMoney(
                                         land.highestOffer?.currentPrice,
-                                        MoneyConfig.AxieUnit
+                                        MoneyConfig.MarketUnit
                                       )}
                                     </TableCell>
                                     <TableCell>
                                       {formatMoney(
                                         land.transferHistory.results[0]
                                           ?.withPrice,
-                                        MoneyConfig.AxieUnit
+                                        MoneyConfig.MarketUnit
                                       )}
                                     </TableCell>
                                     <TableCell>
