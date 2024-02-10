@@ -9,3 +9,9 @@
   border-radius: 0px;
   background: transparent;
 }
+
+.basic_transition_200 {
+  transition: all;
+  transition-duration: 200;
+  transition: ease-in-out;
+}
