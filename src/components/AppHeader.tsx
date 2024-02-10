@@ -163,7 +163,7 @@ export default function AppHeader() {
               <ChevronRightIcon />
             )}
           </IconButton>
-          version 0.1.0
+          version 0.1.11
         </DrawerHeader>
         <Divider />
         <Box sx={{ minHeight: 180, flexGrow: 1, maxWidth: 300 }}>
@@ -191,7 +191,7 @@ export default function AppHeader() {
               >
                 <TreeItem nodeId="1012" label="Auctions" />
               </Link>
-              {/* <TreeItem
+              <TreeItem
                 disabled
                 nodeId="102"
                 label="erc1155"
@@ -203,7 +203,7 @@ export default function AppHeader() {
               >
                 <TreeItem nodeId="1021" label="Sales" />
               </Link>
-              <Link
+              {/* <Link
                 to="/items/auctions"
                 className="decoration-none text-unset w-full"
               >
