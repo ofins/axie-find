@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import AppTitle from "@/components/AppTitle";
