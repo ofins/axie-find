@@ -1,3 +1,4 @@
+import React from "react";
 import Paper from "@mui/material/Paper";
 import { Link, NavLink } from "react-router-dom";
 import { sideNavList } from "@/settings/menuSetting";
@@ -36,19 +37,17 @@ const Home = () => {
         <Paper
           sx={{
             display: "grid",
-            alignItems: "center",
             maxWidth: 400,
-            padding: 5,
-            position: "absolute",
-            top: "10%",
-            left: "2%",
+            padding: 3,
           }}
           elevation={1}
           square={false}
         >
-          <b>Important:</b> AxieFind is built using free hosting
-          service. You may experience delay in initial load time (generally
-          around 30 seconds). Please be patient.
+          <div className="text-14px">
+            <b>Important:</b> AxieFind is built using free hosting service.
+            Initial spin up of server may take up to 30 seconds, please be
+            patient.
+          </div>
         </Paper>
       </div>
     </div>
