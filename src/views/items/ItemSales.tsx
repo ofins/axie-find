@@ -84,13 +84,15 @@ const ItemSales = () => {
                     {item.transferHistory.results[0].settleQuantity}
                   </TableCell>
                   <TableCell>
-                    <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
-                      {item.transferHistory.results[0].fromProfile.name}
-                    </span>
-                    <span className="w-fit">➡️</span>
-                    <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
-                      {item.transferHistory.results[0].toProfile.name}
-                    </span>
+                    <div className="flex justify-between">
+                      <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
+                        {item.transferHistory.results[0].fromProfile.name}
+                      </span>
+                      <span className="w-fit">➡️</span>
+                      <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
+                        {item.transferHistory.results[0].toProfile.name}
+                      </span>
+                    </div>
                   </TableCell>
                 </StyledTableRow>
               ))}
