@@ -5,9 +5,11 @@ import { sideNavList } from "@/settings/menuSetting";
 
 const Home = () => {
   return (
-    <div className="h-100vh w-full flex flex-col justify-center gap-20px items-center">
-      <div className="text-24px">Welcome to AxieFind</div>
-      <div className="flex flex-col gap-14px">
+    <div className="h-100vh w-full flex flex-col justify-center gap-50px items-center">
+      <div className="text-36px">
+        Welcome to <strong>AxieFind</strong>
+      </div>
+      <div className="grid grid-cols-3 gap-14px pb-50px">
         {sideNavList.map((item, index) => {
           return (
             <NavLink
@@ -15,7 +17,7 @@ const Home = () => {
               key={index}
               className="decoration-none text-unset"
             >
-              <div className="text-center cursor-pointer hover:translate-x-10 transition-duration-700 transition-ease-in-out ">
+              <div className="text-center cursor-pointer hover:translate-y--3 transition-duration-700 transition-ease-in-out">
                 <Paper
                   sx={{
                     height: 70,
