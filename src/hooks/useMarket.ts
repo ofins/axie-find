@@ -265,7 +265,7 @@ export const useItem = () => {
     try {
       const response = await fetchAxieMarketData(params);
       const data = response.data;
-      setItemLists(data)
+      setItemLists(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -283,3 +283,8 @@ export const useItem = () => {
     fetchItemSalesData,
   };
 };
+
+// Jest test fn
+export function sum(a: number, b: number) {
+  return a + b;
+}
