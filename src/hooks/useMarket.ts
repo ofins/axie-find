@@ -283,8 +283,3 @@ export const useItem = () => {
     fetchItemSalesData,
   };
 };
-
-// Jest test fn
-export function sum(a: number, b: number) {
-  return a + b;
-}
