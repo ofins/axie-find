@@ -91,7 +91,7 @@ function GenkaiSales() {
         <ScatterChartCustom
           width={600}
           height={400}
-          data={createGenkaiSalesChartData()}
+          data={createGenkaiSalesChartData(genkaiLists)}
         />
       </div>
     </LoadErrorTemplate>

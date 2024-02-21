@@ -122,11 +122,11 @@ export const useLand = () => {
       landLists[landType].map((land) => {
         const askPrice = formatMoney(
           land?.order?.currentPrice ?? 0,
-          MoneyConfig.MarketUnit
+          MoneyConfig.MarketUnit,
         );
         const bidPrice = formatMoney(
           land.highestOffer?.currentPrice ?? 0,
-          MoneyConfig.MarketUnit
+          MoneyConfig.MarketUnit,
         );
         results[landType].ask.push(askPrice);
         results[landType].bid.push(bidPrice);
@@ -173,9 +173,9 @@ export const useGenkai = () => {
     }
   };
 
-  const createGenkaiSalesChartData = () => {
+  const createGenkaiSalesChartData = (array) => {
     const data = [];
-    genkaiLists.map((genkai) => {
+    array.map((genkai) => {
       const genkaiData = {
         x: genkai?.timestamp,
         y: formatMoney(genkai?.realPrice, MoneyConfig.MarketUnit),
@@ -192,11 +192,11 @@ export const useGenkai = () => {
     genkaiLists.map((genkai) => {
       const askPrice = formatMoney(
         genkai.order.currentPrice,
-        MoneyConfig.MarketUnit
+        MoneyConfig.MarketUnit,
       );
       const bidPrice = formatMoney(
         genkai.offers[0]?.currentPrice ?? 0,
-        MoneyConfig.MarketUnit
+        MoneyConfig.MarketUnit,
       );
       results.ask.push(askPrice);
       results.bid.push(bidPrice);
@@ -252,7 +252,7 @@ export const useItem = () => {
 
   const fetchItemSalesData = async (
     size: number = 500,
-    tokenType: string = "Consumable"
+    tokenType: string = "Consumable",
   ) => {
     const params = {
       queryType: "erc1155TokenSalesQuery",
