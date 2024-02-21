@@ -176,7 +176,7 @@ export const useGenkai = () => {
   const createGenkaiSalesChartData = (array) => {
     const data = [];
 
-    if (array === null || array === undefined) {
+    if (!array) {
       return data;
     }
 
@@ -192,11 +192,14 @@ export const useGenkai = () => {
     return data;
   };
 
-  const createGenkaiAuctionsChartData = () => {
+  const createGenkaiAuctionsChartData = (array) => {
     const results = { ask: [], bid: [] };
-    genkaiLists.map((genkai) => {
+    if (!array) {
+      return results;
+    }
+    array.map((genkai) => {
       const askPrice = formatMoney(
-        genkai.order.currentPrice,
+        genkai.order.currentPrice ?? 0,
         MoneyConfig.MarketUnit,
       );
       const bidPrice = formatMoney(
