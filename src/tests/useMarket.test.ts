@@ -88,6 +88,16 @@ describe("useGenkai", () => {
           { x: "2024-02-17", y: 150, id: "hash2" },
         ],
       ],
+      [
+        [
+          { timestamp: null, realPrice: null, txHash: null },
+          { timestamp: null, realPrice: 150, txHash: "hash2" },
+        ],
+        [
+          { x: null, y: null, id: null },
+          { x: null, y: 150, id: "hash2" },
+        ],
+      ],
       [null, []],
       [undefined, []],
     ])(
@@ -96,6 +106,53 @@ describe("useGenkai", () => {
         const { result } = renderHook(() => useGenkai());
         result.current.genkaiLists = a;
         const chartData = result.current.createGenkaiSalesChartData;
+        expect(chartData(a)).toEqual(expected);
+      },
+    );
+  });
+
+  describe("createGenkaiAuctionsChartData", () => {
+    test.concurrent.each([
+      [
+        [
+          {
+            order: { currentPrice: 100 },
+            offers: [{ currentPrice: 90 }],
+          },
+          {
+            order: { currentPrice: 150 },
+            offers: [{ currentPrice: 140 }],
+          },
+        ],
+        {
+          ask: [100, 150],
+          bid: [90, 140],
+        },
+      ],
+      [
+        [
+          {
+            order: { currentPrice: null },
+            offers: [{ currentPrice: null }],
+          },
+          {
+            order: { currentPrice: 150 },
+            offers: [{ currentPrice: 140 }],
+          },
+        ],
+        {
+          ask: [0, 150],
+          bid: [0, 140],
+        },
+      ],
+      [null, { ask: [], bid: [] }],
+      [undefined, { ask: [], bid: [] }],
+    ])(
+      "should verify behavior of function for different input scenarios",
+      (a, expected) => {
+        const { result } = renderHook(() => useGenkai());
+        result.current.genkaiLists = a;
+        const chartData = result.current.createGenkaiAuctionsChartData;
         expect(chartData(a)).toEqual(expected);
       },
     );
