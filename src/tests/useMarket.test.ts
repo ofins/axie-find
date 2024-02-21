@@ -10,7 +10,6 @@ import { useExchangeRate, useItem, useGenkai } from "@/hooks/useMarket";
 import { fetchAxieMarketData } from "@/api/axieMarketPlace";
 import { fetchMavisMarketData } from "@/api/mavisMarketPlace";
 import { renderHook, waitFor } from "@testing-library/react";
-import { formatMoney } from "@/util/formatMoney";
 
 jest.mock("@/api/axieMarketPlace", () => ({
   fetchAxieMarketData: jest.fn(),
@@ -18,6 +17,11 @@ jest.mock("@/api/axieMarketPlace", () => ({
 
 jest.mock("@/api/mavisMarketPlace", () => ({
   fetchMavisMarketData: jest.fn(),
+}));
+
+jest.mock("@/util/formatMoney", () => ({
+  MoneyConfig: { MarketUnit: "USD" },
+  formatMoney: jest.fn((x) => x),
 }));
 
 describe("useGenkai", () => {
@@ -74,25 +78,22 @@ describe("useGenkai", () => {
   describe("createGenkaiSalesChartData", () => {
     const { result } = renderHook(() => useGenkai());
 
-    it.skip("should create sales chart data correctly", () => {
+    // TODO:
+    it("should create sales chart data correctly", () => {
       const mockGenkaiLists = [
         { timestamp: "2024-02-16", realPrice: 100, txHash: "hash1" },
         { timestamp: "2024-02-17", realPrice: 150, txHash: "hash2" },
       ];
-
-      result.current.genkaiLists = mockGenkaiLists;
 
       const expectedChartData = [
         { x: "2024-02-16", y: 100, id: "hash1" },
         { x: "2024-02-17", y: 150, id: "hash2" },
       ];
 
-      // const chartData = result.current.createGenkaiSalesChartData();
-      // console.log(chartData);
+      result.current.genkaiLists = mockGenkaiLists;
+      const chartData = result.current.createGenkaiSalesChartData;
 
-      expect(result.current.createGenkaiSalesChartData()).toEqual(
-        expectedChartData,
-      );
+      expect(chartData(mockGenkaiLists)).toEqual(expectedChartData);
     });
   });
 });
