@@ -2,6 +2,7 @@ import {
   describe,
   expect,
   it,
+  test,
   jest,
   afterEach,
   beforeEach,
@@ -76,25 +77,28 @@ describe("useGenkai", () => {
   });
 
   describe("createGenkaiSalesChartData", () => {
-    const { result } = renderHook(() => useGenkai());
-
-    // TODO:
-    it("should create sales chart data correctly", () => {
-      const mockGenkaiLists = [
-        { timestamp: "2024-02-16", realPrice: 100, txHash: "hash1" },
-        { timestamp: "2024-02-17", realPrice: 150, txHash: "hash2" },
-      ];
-
-      const expectedChartData = [
-        { x: "2024-02-16", y: 100, id: "hash1" },
-        { x: "2024-02-17", y: 150, id: "hash2" },
-      ];
-
-      result.current.genkaiLists = mockGenkaiLists;
-      const chartData = result.current.createGenkaiSalesChartData;
-
-      expect(chartData(mockGenkaiLists)).toEqual(expectedChartData);
-    });
+    test.concurrent.each([
+      [
+        [
+          { timestamp: "2024-02-16", realPrice: 100, txHash: "hash1" },
+          { timestamp: "2024-02-17", realPrice: 150, txHash: "hash2" },
+        ],
+        [
+          { x: "2024-02-16", y: 100, id: "hash1" },
+          { x: "2024-02-17", y: 150, id: "hash2" },
+        ],
+      ],
+      [null, []],
+      [undefined, []],
+    ])(
+      "should verify behavior of function for different input scenarios",
+      (a, expected) => {
+        const { result } = renderHook(() => useGenkai());
+        result.current.genkaiLists = a;
+        const chartData = result.current.createGenkaiSalesChartData;
+        expect(chartData(a)).toEqual(expected);
+      },
+    );
   });
 });
 

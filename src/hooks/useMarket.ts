@@ -175,6 +175,11 @@ export const useGenkai = () => {
 
   const createGenkaiSalesChartData = (array) => {
     const data = [];
+
+    if (array === null || array === undefined) {
+      return data;
+    }
+
     array.map((genkai) => {
       const genkaiData = {
         x: genkai?.timestamp,
