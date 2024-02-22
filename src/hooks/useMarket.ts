@@ -116,6 +116,7 @@ export const useLand = () => {
     landLists,
     setLandLists,
     updateFrequency,
+    fetchLandInfo,
     fetchAllLandsData,
     createLandSalesChartData,
     createLandAuctionsChartData,

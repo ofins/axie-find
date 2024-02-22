@@ -7,7 +7,12 @@ import {
   afterEach,
   beforeEach,
 } from "@jest/globals";
-import { useExchangeRate, useItem, useGenkai } from "@/hooks/useMarket";
+import {
+  useExchangeRate,
+  useItem,
+  useGenkai,
+  useLand,
+} from "@/hooks/useMarket";
 import { fetchAxieMarketData } from "@/api/axieMarketPlace";
 import { fetchMavisMarketData } from "@/api/mavisMarketPlace";
 import { renderHook, waitFor } from "@testing-library/react";
@@ -24,6 +29,63 @@ jest.mock("@/util/formatMoney", () => ({
   MoneyConfig: { MarketUnit: "USD" },
   formatMoney: jest.fn((x) => x),
 }));
+
+describe("useLand", () => {
+  describe("fetchLandInfo", () => {
+    let result;
+
+    beforeEach(() => {
+      result = renderHook(() => useLand()).result;
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should fetch data and return correct output", async () => {
+      const mockData = {
+        test: "hello world",
+      };
+      fetchAxieMarketData.mockResolvedValueOnce({
+        data: mockData,
+      });
+
+      const queryType = "landSalesQuery";
+      const size = 500;
+
+      const response = await waitFor(() =>
+        result.current.fetchLandInfo(queryType, size),
+      );
+
+      expect(fetchAxieMarketData).toHaveBeenCalledWith({
+        queryType: queryType,
+        variables: {
+          size: size,
+        },
+      });
+      expect(response).toEqual(mockData);
+      expect(result.current.loading).toBeFalsy();
+    });
+
+    it("should set errorMessage when fetch fails", async () => {
+      const errorMessage = "fail fetch";
+      fetchAxieMarketData.mockRejectedValueOnce(errorMessage);
+
+      const queryType = "landSalesQuery";
+      const size = 500;
+
+      try {
+        await waitFor(() => result.current.fetchLandInfo(queryType, size));
+      } catch (error) {
+        expect(error).toBe(errorMessage);
+        expect(result.current.setErrorMessage).toHaveBeenCalledWith(
+          errorMessage,
+        );
+      }
+      expect(result.current.loading).toBeFalsy();
+    });
+  });
+});
 
 describe("useGenkai", () => {
   describe("fetchGenkaiMarketData", () => {
