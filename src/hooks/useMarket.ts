@@ -18,30 +18,17 @@ export const useLand = () => {
   const landTypes = ["Savannah", "Forest", "Arctic", "Mystic", "Genesis"];
   const landIcons = ["🏝️", "🌲", "🏔️", "🌺", "🏵️"];
 
-  const fetchLandSalesData = async (size: number = 500) => {
+  const fetchLandInfo = async (queryType: string, size: number = 500) => {
     const params = {
-      queryType: "landSalesQuery",
+      queryType: queryType,
       variables: {
         size: size,
       },
     };
 
-    const response = await fetchAxieMarketData(params);
-    const data = response.data;
-
     try {
-      landTypes.forEach((landType) => {
-        const landArr = [];
-        data.map((land) => {
-          if (land.landType === landType) {
-            landArr.push(land);
-          }
-        });
-        setLandLists((prevLandLists) => ({
-          ...prevLandLists,
-          [landType]: landArr,
-        }));
-      });
+      const response = await fetchAxieMarketData(params);
+      return response.data;
     } catch (error) {
       console.error(error);
       setErrorMessage(error);
@@ -50,42 +37,28 @@ export const useLand = () => {
     }
   };
 
-  const fetchLandAuctionsData = async (size: number = 500) => {
-    const params = {
-      queryType: "landsAuctionQuery",
-      variables: {
-        size: size,
-      },
-    };
-
-    const response = await fetchAxieMarketData(params);
-    const data = response.data;
-
+  const groupLands = (data) => {
+    const result = {};
     landTypes.forEach((landType) => {
-      const landArr = [];
-      data.map((land) => {
-        if (land.landType === landType) {
-          landArr.push(land);
-        }
-      });
-
-      setLandLists((prevLandLists) => ({
-        ...prevLandLists,
-        [landType]: landArr,
-      }));
+      result[landType] = data.filter((item) => item.landType === landType);
     });
-
-    setLoading(false);
+    return result;
   };
 
   const fetchAllLandsData = async (view: string) => {
     switch (view) {
-      case "sales":
-        fetchLandSalesData();
+      case "sales": {
+        const response = await fetchLandInfo("landSalesQuery");
+        const data = groupLands(response);
+        setLandLists(data);
         break;
-      case "auctions":
-        fetchLandAuctionsData();
+      }
+      case "auctions": {
+        const response = await fetchLandInfo("landsAuctionQuery");
+        const data = groupLands(response);
+        setLandLists(data);
         break;
+      }
       default:
         break;
     }
@@ -141,8 +114,8 @@ export const useLand = () => {
     loading,
     errorMessage,
     landLists,
+    setLandLists,
     updateFrequency,
-    fetchLandSalesData,
     fetchAllLandsData,
     createLandSalesChartData,
     createLandAuctionsChartData,
