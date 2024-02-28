@@ -211,6 +211,7 @@ export default function AppHeader() {
               </Link> */}
             </TreeItem>
             <TreeItem nodeId="2" label="Mavis Market">
+              {/* Genkai */}
               <TreeItem
                 disabled
                 nodeId="201"
@@ -228,6 +229,25 @@ export default function AppHeader() {
                 className="decoration-none text-unset w-full"
               >
                 <TreeItem nodeId="2012" label="Auctions" />
+              </Link>
+              {/* Pixels Pet  */}
+              <TreeItem
+                disabled
+                nodeId="201"
+                label="Pixels Pet"
+                className="ml--16px!"
+              />
+              <Link
+                to="/pixels-pet/sales"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="2021" label="Sales" />
+              </Link>
+              <Link
+                to="/pixels-pet/auctions"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="2022" label="Auctions" />
               </Link>
             </TreeItem>
           </TreeView>

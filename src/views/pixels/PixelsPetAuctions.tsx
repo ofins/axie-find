@@ -17,7 +17,7 @@ import {
   Paper,
 } from "@mui/material";
 
-const GenkaiAuctions = () => {
+const PixelsPetAuctions = () => {
   const {
     itemLists,
     loading,
@@ -29,8 +29,8 @@ const GenkaiAuctions = () => {
 
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
 
-  const title = "Genkai Auctions Listed";
-  const dataType = "genkaiAuctionsQuery";
+  const title = "Pixels Pet Auctions Listed";
+  const dataType = "pixelPetsAuctionsQuery";
 
   useEffect(() => {
     fetchMavisItemMarketData(dataType);
@@ -73,46 +73,46 @@ const GenkaiAuctions = () => {
                 </StyledTableRow>
               </TableHead>
               <TableBody>
-                {itemLists?.map((genkai, index) => (
+                {itemLists?.map((pet, index) => (
                   <StyledTableRow key={index} className="whitespace-nowrap">
                     <TableCell>{index + 1}</TableCell>
-                    {genkai.order ? (
+                    {pet.order ? (
                       <>
                         <TableCell className="flex items-center justify-center ">
-                          <img src={genkai.image} className="h-50px mt-10px " />
+                          <img src={pet.image} className="h-50px mt-10px " />
                         </TableCell>
                         <TableCell
                           className="fw-700! cursor-pointer hover:underline"
                           onClick={() =>
                             redirectMavisNFT(
-                              genkai.order.assets[0].address,
-                              genkai.order.assets[0].id,
+                              pet.order.assets[0].address,
+                              pet.order.assets[0].id,
                             )
                           }
                         >
                           {formatMoney(
-                            genkai?.order.currentPrice,
+                            pet?.order.currentPrice,
                             MoneyConfig.MarketUnit,
                           )}
                         </TableCell>
                         <TableCell>
-                          {formatDateTime(genkai.order.startedAt)}
+                          {formatDateTime(pet.order.startedAt)}
                         </TableCell>
                         <TableCell>
                           {formatMoney(
-                            genkai.offers[0]?.currentPrice,
+                            pet.offers[0]?.currentPrice,
                             MoneyConfig.MarketUnit,
                           )}
                         </TableCell>
                         <TableCell>
                           {formatMoney(
-                            genkai.transferHistory.results[0]?.withPrice,
+                            pet.transferHistory.results[0]?.withPrice,
                             MoneyConfig.MarketUnit,
                           )}
                         </TableCell>
                         <TableCell>
                           {formatDateTime(
-                            genkai?.transferHistory.results[0]?.timestamp,
+                            pet?.transferHistory.results[0]?.timestamp,
                           )}
                         </TableCell>
                       </>
@@ -142,4 +142,4 @@ const GenkaiAuctions = () => {
   );
 };
 
-export default GenkaiAuctions;
+export default PixelsPetAuctions;

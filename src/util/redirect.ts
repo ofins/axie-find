@@ -17,6 +17,6 @@ export const redirectRoninTx = (tx: string) => {
   window.open(`${RONIN_URL}/tx/${tx}`, "_blank");
 };
 
-export const redirectGenkai = (address: string, id: number) => {
+export const redirectMavisNFT = (address: string, id: number) => {
   window.open(`${MAVIS_MARKETPLACE}/collections/${address}/${id}`, "_blank");
 };
