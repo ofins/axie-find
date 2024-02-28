@@ -123,13 +123,13 @@ export const useLand = () => {
   };
 };
 
-export const useGenkai = () => {
+export const useMavisMarket = () => {
   const updateFrequency = 300000;
-  const [genkaiLists, setGenkaiLists] = useState([]);
+  const [itemLists, setItemLists] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const fetchGenkaiMarketData = async (dataType: string) => {
+  const fetchMavisItemMarketData = async (dataType: string) => {
     const params = {
       queryType: dataType,
     };
@@ -137,7 +137,7 @@ export const useGenkai = () => {
     try {
       const response = await fetchMavisMarketData(params);
       const data = response.data;
-      setGenkaiLists(data);
+      setItemLists(data);
       return data;
     } catch (error) {
       setErrorMessage(error);
@@ -147,37 +147,37 @@ export const useGenkai = () => {
     }
   };
 
-  const createGenkaiSalesChartData = (array) => {
+  const createMavisItemsSalesChartData = (array) => {
     const data = [];
 
     if (!array) {
       return data;
     }
 
-    array.map((genkai) => {
-      const genkaiData = {
-        x: genkai?.timestamp,
-        y: formatMoney(genkai?.realPrice, MoneyConfig.MarketUnit),
-        id: genkai?.txHash,
+    array.map((item) => {
+      const itemData = {
+        x: item?.timestamp,
+        y: formatMoney(item?.realPrice, MoneyConfig.MarketUnit),
+        id: item?.txHash,
       };
-      data.push(genkaiData);
+      data.push(itemData);
     });
 
     return data;
   };
 
-  const createGenkaiAuctionsChartData = (array) => {
+  const createMavisItemsAuctionsChartData = (array) => {
     const results = { ask: [], bid: [] };
     if (!array) {
       return results;
     }
-    array.map((genkai) => {
+    array.map((item) => {
       const askPrice = formatMoney(
-        genkai.order.currentPrice ?? 0,
+        item.order.currentPrice ?? 0,
         MoneyConfig.MarketUnit,
       );
       const bidPrice = formatMoney(
-        genkai.offers[0]?.currentPrice ?? 0,
+        item.offers[0]?.currentPrice ?? 0,
         MoneyConfig.MarketUnit,
       );
       results.ask.push(askPrice);
@@ -187,13 +187,13 @@ export const useGenkai = () => {
   };
 
   return {
-    genkaiLists,
+    itemLists,
     loading,
     errorMessage,
     updateFrequency,
-    createGenkaiSalesChartData,
-    createGenkaiAuctionsChartData,
-    fetchGenkaiMarketData,
+    createMavisItemsSalesChartData,
+    createMavisItemsAuctionsChartData,
+    fetchMavisItemMarketData,
   };
 };
 

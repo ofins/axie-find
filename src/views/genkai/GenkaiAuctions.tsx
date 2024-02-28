@@ -5,7 +5,7 @@ import { MoneyConfig } from "@/util/formatMoney";
 import { StyledTableRow } from "@/styles/material/table";
 import { redirectGenkai } from "@/util/redirect";
 import React from "react";
-import { useGenkai } from "@/hooks/useMarket";
+import { useMavisMarket } from "@/hooks/useMarket";
 import AuctionsBidAskChart from "@/components/AuctionsBidAskChart";
 import LoadErrorTemplate from "@/views/components/LoadErrorTemplate";
 import {
@@ -19,13 +19,13 @@ import {
 
 const GenkaiAuctions = () => {
   const {
-    genkaiLists,
+    itemLists,
     loading,
     errorMessage,
     updateFrequency,
-    fetchGenkaiMarketData,
-    createGenkaiAuctionsChartData,
-  } = useGenkai();
+    fetchMavisItemMarketData,
+    createMavisItemsAuctionsChartData,
+  } = useMavisMarket();
 
   const [lastUpdated, setLastUpdated] = useState(displayCurrentTime());
 
@@ -33,10 +33,10 @@ const GenkaiAuctions = () => {
   const dataType = "genkaiAuctionsQuery";
 
   useEffect(() => {
-    fetchGenkaiMarketData(dataType);
+    fetchMavisItemMarketData(dataType);
 
     const intervalId = setInterval(() => {
-      fetchGenkaiMarketData(dataType);
+      fetchMavisItemMarketData(dataType);
 
       setLastUpdated(displayCurrentTime());
     }, updateFrequency);
@@ -73,7 +73,7 @@ const GenkaiAuctions = () => {
                 </StyledTableRow>
               </TableHead>
               <TableBody>
-                {genkaiLists?.map((genkai, index) => (
+                {itemLists?.map((genkai, index) => (
                   <StyledTableRow key={index} className="whitespace-nowrap">
                     <TableCell>{index + 1}</TableCell>
                     {genkai.order ? (
@@ -86,13 +86,13 @@ const GenkaiAuctions = () => {
                           onClick={() =>
                             redirectGenkai(
                               genkai.order.assets[0].address,
-                              genkai.order.assets[0].id
+                              genkai.order.assets[0].id,
                             )
                           }
                         >
                           {formatMoney(
                             genkai?.order.currentPrice,
-                            MoneyConfig.MarketUnit
+                            MoneyConfig.MarketUnit,
                           )}
                         </TableCell>
                         <TableCell>
@@ -101,18 +101,18 @@ const GenkaiAuctions = () => {
                         <TableCell>
                           {formatMoney(
                             genkai.offers[0]?.currentPrice,
-                            MoneyConfig.MarketUnit
+                            MoneyConfig.MarketUnit,
                           )}
                         </TableCell>
                         <TableCell>
                           {formatMoney(
                             genkai.transferHistory.results[0]?.withPrice,
-                            MoneyConfig.MarketUnit
+                            MoneyConfig.MarketUnit,
                           )}
                         </TableCell>
                         <TableCell>
                           {formatDateTime(
-                            genkai?.transferHistory.results[0]?.timestamp
+                            genkai?.transferHistory.results[0]?.timestamp,
                           )}
                         </TableCell>
                       </>
@@ -133,7 +133,7 @@ const GenkaiAuctions = () => {
           </TableContainer>
         </Paper>
         <AuctionsBidAskChart
-          data={createGenkaiAuctionsChartData()}
+          data={createMavisItemsAuctionsChartData()}
           width={600}
           height={400}
         />

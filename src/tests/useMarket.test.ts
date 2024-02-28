@@ -10,7 +10,7 @@ import {
 import {
   useExchangeRate,
   useItem,
-  useGenkai,
+  useMavisMarket,
   useLand,
 } from "@/hooks/useMarket";
 import { fetchAxieMarketData } from "@/api/axieMarketPlace";
@@ -87,14 +87,14 @@ describe("useLand", () => {
   });
 });
 
-describe("useGenkai", () => {
-  describe("fetchGenkaiMarketData", () => {
+describe("useMavisMarket", () => {
+  describe("fetchMavisItemMarketData", () => {
     let result;
 
     beforeEach(() => {
-      result = renderHook(() => useGenkai()).result;
+      result = renderHook(() => useMavisMarket()).result;
 
-      expect(result.current.genkaiLists).toEqual([]);
+      expect(result.current.itemLists).toEqual([]);
       expect(result.current.loading).toBeTruthy();
       expect(result.current.errorMessage).toBeNull();
     });
@@ -110,9 +110,9 @@ describe("useGenkai", () => {
         data: mockData,
       });
 
-      await waitFor(() => result.current.fetchGenkaiMarketData());
+      await waitFor(() => result.current.fetchMavisItemMarketData());
 
-      expect(result.current.genkaiLists).toEqual(mockData);
+      expect(result.current.itemLists).toEqual(mockData);
       expect(result.current.loading).toBeFalsy();
       expect(result.current.errorMessage).toBeNull();
     });
@@ -122,23 +122,23 @@ describe("useGenkai", () => {
       (fetchMavisMarketData as jest.Mock).mockRejectedValueOnce(mockError);
 
       try {
-        await waitFor(() => result.current.fetchGenkaiMarketData());
+        await waitFor(() => result.current.fetchMavisItemMarketData());
       } catch (error) {
         expect(error).toBe(mockError);
       }
       expect(result.current.errorMessage).toBe(mockError);
       expect(result.current.loading).toBeFalsy();
-      expect(result.current.genkaiLists).toEqual([]);
+      expect(result.current.itemLists).toEqual([]);
     });
 
     it("should handle empty responses correctly", async () => {
       (fetchMavisMarketData as jest.Mock).mockResolvedValueOnce({ data: [] });
-      await waitFor(() => result.current.fetchGenkaiMarketData());
-      expect(result.current.genkaiLists).toEqual([]);
+      await waitFor(() => result.current.fetchMavisItemMarketData());
+      expect(result.current.itemLists).toEqual([]);
     });
   });
 
-  describe("createGenkaiSalesChartData", () => {
+  describe("createMavisItemsSalesChartData", () => {
     test.concurrent.each([
       [
         [
@@ -165,15 +165,15 @@ describe("useGenkai", () => {
     ])(
       "should verify behavior of function for different input scenarios",
       (a, expected) => {
-        const { result } = renderHook(() => useGenkai());
-        result.current.genkaiLists = a;
-        const chartData = result.current.createGenkaiSalesChartData;
+        const { result } = renderHook(() => useMavisMarket());
+        result.current.itemLists = a;
+        const chartData = result.current.createMavisItemsSalesChartData;
         expect(chartData(a)).toEqual(expected);
       },
     );
   });
 
-  describe("createGenkaiAuctionsChartData", () => {
+  describe("createMavisItemsAuctionsChartData", () => {
     test.concurrent.each([
       [
         [
@@ -212,9 +212,9 @@ describe("useGenkai", () => {
     ])(
       "should verify behavior of function for different input scenarios",
       (a, expected) => {
-        const { result } = renderHook(() => useGenkai());
-        result.current.genkaiLists = a;
-        const chartData = result.current.createGenkaiAuctionsChartData;
+        const { result } = renderHook(() => useMavisMarket());
+        result.current.itemLists = a;
+        const chartData = result.current.createMavisItemsAuctionsChartData;
         expect(chartData(a)).toEqual(expected);
       },
     );

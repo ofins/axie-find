@@ -5,7 +5,7 @@ import { MoneyConfig } from "@/util/formatMoney";
 import { StyledTableRow } from "@/styles/material/table";
 import { redirectRoninTx } from "@/util/redirect";
 import React from "react";
-import { useGenkai } from "@/hooks/useMarket";
+import { useMavisMarket } from "@/hooks/useMarket";
 import ScatterChartCustom from "@/components/ScatterChartCustom";
 import LoadErrorTemplate from "@/views/components/LoadErrorTemplate";
 import {
@@ -23,19 +23,19 @@ function GenkaiSales() {
   const dataType = "genkaiSalesQuery";
 
   const {
-    genkaiLists,
+    itemLists,
     loading,
     errorMessage,
     updateFrequency,
-    createGenkaiSalesChartData,
-    fetchGenkaiMarketData,
-  } = useGenkai();
+    createMavisItemsSalesChartData,
+    fetchMavisItemMarketData,
+  } = useMavisMarket();
 
   useEffect(() => {
-    fetchGenkaiMarketData(dataType);
+    fetchMavisItemMarketData(dataType);
 
     const intervalId = setInterval(() => {
-      fetchGenkaiMarketData(dataType);
+      fetchMavisItemMarketData(dataType);
       setLastUpdated(displayCurrentTime());
     }, updateFrequency);
 
@@ -70,7 +70,7 @@ function GenkaiSales() {
                 </StyledTableRow>
               </TableHead>
               <TableBody>
-                {genkaiLists.map((genkai, index) => (
+                {itemLists.map((genkai, index) => (
                   <StyledTableRow key={index} className="whitespace-nowrap">
                     <TableCell>{index + 1}</TableCell>
                     <>
@@ -91,7 +91,7 @@ function GenkaiSales() {
         <ScatterChartCustom
           width={600}
           height={400}
-          data={createGenkaiSalesChartData(genkaiLists)}
+          data={createMavisItemsSalesChartData(itemLists)}
         />
       </div>
     </LoadErrorTemplate>
