@@ -95,7 +95,7 @@ function LandsSales() {
                             <>
                               <TableCell>
                                 {formatDateTime(
-                                  land.transferHistory.results[0].timestamp
+                                  land.transferHistory.results[0].timestamp,
                                 )}
                               </TableCell>
                               <TableCell
@@ -106,7 +106,7 @@ function LandsSales() {
                               >
                                 {formatMoney(
                                   land.transferHistory.results[0].withPrice,
-                                  MoneyConfig.MarketUnit
+                                  MoneyConfig.MarketUnit,
                                 )}
                               </TableCell>
                               <TableCell
@@ -115,7 +115,7 @@ function LandsSales() {
                                     (whale) =>
                                       whale.owner ===
                                       land.transferHistory.results[0]
-                                        .fromProfile.addresses.ronin
+                                        .fromProfile?.addresses.ronin,
                                   )
                                     ? ""
                                     : ""
@@ -125,7 +125,7 @@ function LandsSales() {
                                   <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
                                     {
                                       land.transferHistory.results[0]
-                                        .fromProfile.name
+                                        .fromProfile?.name
                                     }
                                   </span>
                                   <span className="w-fit">➡️</span>
