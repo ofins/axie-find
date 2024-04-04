@@ -7,6 +7,8 @@ import LandsSales from "@/views/lands/LandsSales";
 import LandsAuctions from "@/views/lands/LandsAuctions";
 import GenkaiSales from "@/views/genkai/GenkaiSales";
 import GenkaiAuctions from "@/views/genkai/GenkaiAuctions";
+import VXSales from "@/views/VX/VXSales";
+import VXAuctions from "@/views/VX/VXAuctions";
 import PixelsPetSales from "@/views/pixels/PixelsPetSales";
 import PixelsPetAuctions from "@/views/pixels/PixelsPetAuctions";
 import BasicLayout from "@/views/layouts/BasicLayout";
@@ -45,6 +47,11 @@ function App() {
             <Route path="/genkai" element={<BasicLayout />}>
               <Route path="sales" element={<GenkaiSales />} />
               <Route path="auctions" element={<GenkaiAuctions />} />
+            </Route>
+
+            <Route path="/VX" element={<BasicLayout />}>
+              <Route path="sales" element={<VXSales />} />
+              <Route path="auctions" element={<VXAuctions />} />
             </Route>
 
             <Route path="/pixels-pet" element={<BasicLayout />}>

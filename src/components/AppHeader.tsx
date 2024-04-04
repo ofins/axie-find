@@ -230,10 +230,29 @@ export default function AppHeader() {
               >
                 <TreeItem nodeId="2012" label="Auctions" />
               </Link>
+              {/* CyberKongz VX */}
+              <TreeItem
+                disabled
+                nodeId="202"
+                label="VX"
+                className="ml--16px!"
+              />
+              <Link
+                to="/VX/sales"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="2021" label="Sales" />
+              </Link>
+              <Link
+                to="/VX/auctions"
+                className="decoration-none text-unset w-full"
+              >
+                <TreeItem nodeId="2022" label="Auctions" />
+              </Link>
               {/* Pixels Pet  */}
               <TreeItem
                 disabled
-                nodeId="201"
+                nodeId="203"
                 label="Pixels Pet"
                 className="ml--16px!"
               />
@@ -241,13 +260,13 @@ export default function AppHeader() {
                 to="/pixels-pet/sales"
                 className="decoration-none text-unset w-full"
               >
-                <TreeItem nodeId="2021" label="Sales" />
+                <TreeItem nodeId="2031" label="Sales" />
               </Link>
               <Link
                 to="/pixels-pet/auctions"
                 className="decoration-none text-unset w-full"
               >
-                <TreeItem nodeId="2022" label="Auctions" />
+                <TreeItem nodeId="2032" label="Auctions" />
               </Link>
             </TreeItem>
           </TreeView>
