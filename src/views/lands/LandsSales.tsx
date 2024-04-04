@@ -3,7 +3,6 @@ import { redirectMarketLand } from "@/util/redirect";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
-import { AXIE_WHALES_MP } from "@/settings";
 import { StyledTableRow } from "@/styles/material/table";
 import { useLand } from "@/hooks/useMarket";
 import React from "react";
@@ -109,18 +108,7 @@ function LandsSales() {
                                   MoneyConfig.MarketUnit,
                                 )}
                               </TableCell>
-                              <TableCell
-                                className={`${
-                                  AXIE_WHALES_MP.some(
-                                    (whale) =>
-                                      whale.owner ===
-                                      land.transferHistory.results[0]
-                                        .fromProfile?.addresses.ronin,
-                                  )
-                                    ? ""
-                                    : ""
-                                }`}
-                              >
+                              <TableCell>
                                 <div className="flex justify-between">
                                   <span className="w-100px text-ellipsis whitespace-nowrap overflow-x-hidden">
                                     {

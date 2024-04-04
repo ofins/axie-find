@@ -3,7 +3,6 @@ import { redirectMarketLand } from "@/util/redirect";
 import { formatDateTime, displayCurrentTime } from "@/util/formatDateTime";
 import { formatMoney } from "@/util/formatMoney";
 import { MoneyConfig } from "@/util/formatMoney";
-import { AXIE_WHALES_MP } from "@/settings";
 import { StyledTableRow } from "@/styles/material/table";
 import { useLand } from "@/hooks/useMarket";
 import React from "react";
@@ -105,7 +104,7 @@ function LandsAuctions() {
                                 >
                                   {formatMoney(
                                     land.order.currentPrice,
-                                    MoneyConfig.MarketUnit
+                                    MoneyConfig.MarketUnit,
                                   )}
                                 </TableCell>
                                 <TableCell>
@@ -113,31 +112,25 @@ function LandsAuctions() {
                                 </TableCell>
                                 <TableCell
                                   className={`max-w-120px overflow-x-hidden
-                                    ${
-                                      AXIE_WHALES_MP.some(
-                                        (whale) => whale.owner === land.owner
-                                      )
-                                        ? "italic"
-                                        : ""
-                                    }`}
+                                    `}
                                 >
                                   {land.ownerProfile.name}
                                 </TableCell>
                                 <TableCell>
                                   {formatMoney(
                                     land.highestOffer?.currentPrice,
-                                    MoneyConfig.MarketUnit
+                                    MoneyConfig.MarketUnit,
                                   )}
                                 </TableCell>
                                 <TableCell>
                                   {formatMoney(
                                     land.transferHistory.results[0]?.withPrice,
-                                    MoneyConfig.MarketUnit
+                                    MoneyConfig.MarketUnit,
                                   )}
                                 </TableCell>
                                 <TableCell>
                                   {formatDateTime(
-                                    land.transferHistory.results[0]?.timestamp
+                                    land.transferHistory.results[0]?.timestamp,
                                   )}
                                 </TableCell>
                               </>
